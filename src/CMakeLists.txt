@@ -1,0 +1,111 @@
+use_c99()
+
+# Settings for GCC
+if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  # By default, symbols are not visible outside of the library.
+  set (CMAKE_C_FLAGS "-fvisibility=hidden ${CMAKE_C_FLAGS}")
+
+  # Don't warn about zero-length format strings, which we sometimes
+  # use when constructing error objectss.
+  set (CMAKE_C_FLAGS "-Wno-format-zero-length ${CMAKE_C_FLAGS}")
+
+  # Avoid tons of errors from strsafe.h.
+  set (CMAKE_C_FLAGS "-fgnu89-inline ${CMAKE_C_FLAGS}")
+
+  if (WIN32)
+    # Avoid a warning about stdcall fixup, where the linker resolves symbols
+    # like "foo" in our .def file by linking to something like "_foo@4".
+    set (link_flags "-Wl,--enable-stdcall-fixup ${link_flags}")
+  endif ()
+endif ()
+
+# Define cross-platform source files.
+set (sources
+  async_in_pipe.c
+  error.c
+  find_device.c
+  list.c
+  pipe_id.c
+  string.c)
+
+# Define operating system-specific source files.
+if (WIN32)
+  set (sources ${sources}
+    error_hresult.c
+    windows/error_windows.c
+    windows/device_windows.c
+    windows/interface_windows.c
+    windows/device_instance_id_windows.c
+    windows/generic_interface_windows.c
+    windows/list_windows.c
+    windows/generic_handle_windows.c
+    windows/async_in_transfer_windows.c
+    windows/serial_port_windows.c
+    windows/install_helper_windows.c
+    windows/dll.def
+    ${CMAKE_CURRENT_BINARY_DIR}/info.rc)
+elseif (LINUX)
+  set (sources ${sources}
+    linux/list_linux.c
+    linux/device_linux.c
+    linux/generic_interface_linux.c
+    linux/generic_handle_linux.c
+    linux/error_linux.c
+    linux/udev_linux.c
+    linux/usbfd_linux.c
+    linux/async_in_transfer_linux.c
+    linux/serial_port_linux.c)
+elseif (APPLE)
+  set (sources
+    error_hresult.c
+    mac/list_mac.c
+    mac/device_mac.c
+    mac/error_mac.c
+    mac/generic_interface_mac.c
+    mac/generic_handle_mac.c
+    mac/async_in_transfer_mac.c
+    mac/serial_port_mac.c
+    mac/iokit_mac.c
+    async_in_pipe.c
+    find_device.c
+    list.c
+    pipe_id.c
+    string.c
+    error.c)
+endif ()
+
+add_library (usbp ${sources})
+
+include_directories (
+  "${CMAKE_SOURCE_DIR}/include"
+  "${CMAKE_CURRENT_SOURCE_DIR}"
+  "${CMAKE_CURRENT_BINARY_DIR}"
+)
+
+if (WIN32)
+  target_link_libraries (usbp setupapi winusb uuid msi)
+elseif (LINUX)
+  target_link_libraries (usbp udev)
+elseif (APPLE)
+  set (link_flags "-framework IOkit -framework CoreFoundation ${link_flags}")
+endif()
+
+set_target_properties(usbp PROPERTIES
+  OUTPUT_NAME usbp-${LIBUSBP_VERSION_MAJOR}
+  SOVERSION ${LIBUSBP_VERSION}
+  VERSION ${LIBUSBP_VERSION}
+  DEFINE_SYMBOL LIBUSBP_EXPORTS
+  LINK_FLAGS "${link_flags}"
+)
+
+configure_file (
+  "libusbp_config.h.in"
+  "libusbp_config.h"
+)
+
+configure_file (
+  "info.rc.in"
+  "info.rc"
+)
+
+install(TARGETS usbp DESTINATION lib)

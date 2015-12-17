@@ -1,0 +1,10 @@
+*.o
+*.so
+*.a
+*.lib
+*.dll
+*.exe
+/build*
+/docs
+/test/catch.hpp
+.DS_STORE
