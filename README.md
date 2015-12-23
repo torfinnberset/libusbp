@@ -1,5 +1,7 @@
 # libusbp - Pololu USB Library
 
+Version: 1.0.0<br/>
+Release date: 2015 Dec 24<br/>
 [www.pololu.com](https://www.pololu.com/)
 
 **libusbp** is a cross-platform C library for accessing USB devices.
@@ -13,7 +15,7 @@
 - Can retrieve the names of virtual serial ports provided by a specified USB device (e.g. "COM5").
 - Provides detailed error information to the caller.
   - Each error includes one or more English sentences describing the error, including error codes from underlying APIs.
-  - Each error has zero or more libusbp-defined error codes that can be used to programmatically decide how to handle the error.
+  - Some errors have libusbp-defined error codes that can be used to programmatically decide how to handle the error.
 - Provides an object-oriented C++ wrapper (using features of C++11).
 - Provides access to underlying identifiers, handles, and file descriptors.
 
@@ -200,4 +202,4 @@ If you write software that depends on libusbp, we recommend specifying which maj
 
 ## Version history
 
-* 1.0.0 (2015 Dec 18): Original release.
+* 1.0.0 (2015 Dec 24): Original release.
