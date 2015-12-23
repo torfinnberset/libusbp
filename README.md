@@ -54,25 +54,19 @@ This library has a lot in common with [libusb 1.0](http://libusb.info/), which h
 
 ## Building from source on Windows with MSYS2
 
-The recommended way to build this library on Windows is to use [MSYS2](http://msys2.github.io/).  After installing MSYS2, start an MSYS2 Win32 shell.
+The recommended way to build this library on Windows is to use [MSYS2](http://msys2.github.io/).  These instructions assume you are building a 32-bit binary, which will work on both 32-bit (i686) and 64-bit (x86_64) versions of Windows.
 
-Run this command to install the required packages:
+After installing MSYS2, select "MinGW-w64 Win32 shell" from the Start Menu.  Run this command to install the required packages:
 
     pacman -S mingw-w64-i686-toolchain mingw-w64-i686-cmake
 
-Download the source code of this library and navigate to the top-level directory using `cd`.
+Download the source code of this library and navigate to the top-level directory using `cd`.  Run these commands to build the library and install it:
 
-Run these commands to build the library and install it:
-
-    mkdir build
-    cd build
-    MSYS2_ARG_CONV_EXCL= cmake .. -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
+    MSYS2_ARG_CONV_EXCL= cmake -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
     make install DESTDIR=/
-    mv /mingw32/lib/libusbp*.dll /mingw32/bin
 
-Building for 64-bit Windows is also supported, in which case you would replace `i686` with `x86_64` in the package names above, and replace `mingw32` with `mingw64`.
+We currently do not provide any build files for Visual Studio.  You can use CMake to generate Visual Studio build files, and the library and its examples will probably compile, but we have not tested the resulting library.
 
-We currently do not provide any build files for Visual Studio.  You can use CMake to generate Visual Studio build files, but we have not tested the resulting library.
 
 ## Building from source on Linux
 
@@ -90,9 +84,7 @@ Download the source code of this library and navigate to the top-level directory
 
 Run these commands to build the library and install it:
 
-    mkdir build
-    cd build
-    cmake ..
+    cmake
     make
     sudo make install
 
@@ -109,9 +101,7 @@ Download the source code of this library and navigate to the top-level directory
 
 Run these commands to build the library and install it:
 
-    mkdir build
-    cd build
-    cmake ..
+    cmake
     make
     sudo make install
 
@@ -168,7 +158,7 @@ If you write software that depends on libusbp, we recommend specifying which maj
 
 ## Documentation
 
-For detailed documentation of this library, see the header files `libusb.h` and `libusbp.hpp` in the `include` directory.  You can also use Doxygen to generate documentation from the files in this repository.
+For detailed documentation of this library, see the header files `libusb.h` and `libusbp.hpp` in the `include` directory, and see the `.md` files in this directory.  You can also use [Doxygen](http://doxygen.org/) to generate documentation from those files.
 
 
 ## Version history

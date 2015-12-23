@@ -108,4 +108,7 @@ configure_file (
   "info.rc"
 )
 
-install(TARGETS usbp DESTINATION lib)
+install(TARGETS usbp
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib)
