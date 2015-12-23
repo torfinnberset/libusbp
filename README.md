@@ -126,9 +126,9 @@ To use the C++ API from a C++ project, you should write:
     #include <libusbp.hpp>
 
 After making the changes above, you should be able compile your project successfully.
-If the compiler says that the libusbp header file cannot be found, make sure you have specified the include path correctly.
+If the compiler says that the libusbp header file cannot be found, make sure you have specified the include path correctly as described above.
 
-However, if you add a call to any of the libusbp functions and rebuild, you will probably get an undefined reference error from the linker.  To fix this, you need to add libusbp's linker settings to your project.  To get the linker settings, run:
+If you add a call to any of the libusbp functions and rebuild, you will probably get an undefined reference error from the linker.  To fix this, you need to add libusbp's linker settings to your project.  To get the linker settings, run:
 
     pkg-config --libs libusbp-1
 
@@ -140,7 +140,7 @@ Here is an equivalent command for C++.  Note that we use the `--std=gnu++11` opt
 
     g++ --std=gnu++11 program.cpp `pkg-config --cflags --libs libusbp-1`
 
-The order of the arguments above matters: the user program must come first because it relies on symbols that are defined by libusbp.
+The order of the arguments above matters: the user program must come before libusbp because it relies on symbols that are defined by libusbp.
 
 The `examples` folder of this repository contains some example code that uses libusbp.  These examples can serve as a starting point for your own project.
 
