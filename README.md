@@ -8,8 +8,8 @@ Release date: 2015 Dec 24<br/>
 
 ## Features
 
-- Can retrieve the vendor ID, product ID, revision, and serial number for each USB device on the system.
-- Can perform I/O on a generic (vendor-defined) USB interface:
+- Can retrieve the vendor ID, product ID, revision, and serial number for each connected USB device.
+- Can perform I/O on generic (vendor-defined) USB interfaces:
   - Synchronous control transfers.
   - Synchronous and asynchronous bulk/interrupt transfers on IN endpoints.
 - Can retrieve the names of virtual serial ports provided by a specified USB device (e.g. "COM5").
@@ -31,7 +31,7 @@ The library runs on:
 
 ## Supported USB devices and interfaces
 
-libusbp only supports certain types of USB devices.
+The library only supports certain types of USB devices.
 
 On Windows, any generic interface that you want to access with this library must use WinUSB as its driver, so you will need to provide a driver package or use some other mechanism to make sure WinUSB is installed.  The generic interface must have a registry key named "DeviceInterfaceGUIDs" which is a REG_MULTI_SZ, and the first string in the key must be a valid GUID.  The "DeviceInterfaceGUID" key is not supported.
 
@@ -44,7 +44,7 @@ There is no support for accessing a generic interface that is included in an int
 
 ## Platform differences
 
-This library is a relatively simple wrapper around low-level USB APIs provided by each supported platform.  Because these APIs have different capabilities and behavior, you should not assume your program will work on a platform on which it has not been tested.  Some notable differences are documented in PLATFORM_NOTES.md.
+This library is a relatively simple wrapper around low-level USB APIs provided by each supported platform.  Because these APIs have different capabilities and behavior, you should not assume your program will work on a platform on which it has not been tested.  Some notable differences are documented in `PLATFORM_NOTES.md`.
 
 
 ## Comparison to libusb
@@ -54,13 +54,13 @@ This library has a lot in common with [libusb 1.0](http://libusb.info/), which h
 
 ## Building from source on Windows with MSYS2
 
-The recommended way to build this library on Windows is to use [MSYS2](http://msys2.github.io/).  These instructions assume you are building a 32-bit binary, which will work on both 32-bit (i686) and 64-bit (x86_64) versions of Windows.
+The recommended way to build this library on Windows is to use [MSYS2](http://msys2.github.io/).  These instructions assume you are building a 32-bit binary.
 
-After installing MSYS2, select "MinGW-w64 Win32 shell" from the Start Menu.  Run this command to install the required packages:
+After installing MSYS2, select "MinGW-w64 Win32 shell" from the Start Menu.  Then run this command to install the required packages:
 
     pacman -S mingw-w64-i686-toolchain mingw-w64-i686-cmake
 
-Download the source code of this library and navigate to the top-level directory using `cd`.  Run these commands to build the library and install it:
+Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands to build the library and install it:
 
     MSYS2_ARG_CONV_EXCL= cmake -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
     make install DESTDIR=/
@@ -70,19 +70,17 @@ We currently do not provide any build files for Visual Studio.  You can use CMak
 
 ## Building from source on Linux
 
-First, you will need to make sure that you have a suitable compiler installed, such as gcc.  You can run `gcc -v` to make sure it is available.
+First, you will need to make sure that you have a suitable compiler installed, such as gcc.  You can run `gcc -v` in a shell to make sure it is available.
 
-Then you will need to install cmake and libudev.  On Ubuntu, the command to do this is:
+You will also need to install CMake and libudev.  On Ubuntu, the command to do this is:
 
     sudo apt-get install cmake libudev-dev
 
-On Arch Linux, libudev should already be installed, and you can install cmake by running:
+On Arch Linux, libudev should already be installed, and you can install CMake by running:
 
     sudo pacman -S cmake
 
-Download the source code of this library and navigate to the top-level directory using `cd`.
-
-Run these commands to build the library and install it:
+Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands to build the library and install it:
 
     cmake
     make
@@ -91,15 +89,11 @@ Run these commands to build the library and install it:
 
 ## Building from source on Mac OS X
 
-First, install [homebrew](http://brew.sh/).
-
-Then use brew to install cmake:
+First, install [Homebrew](http://brew.sh/), a package manager for Mac OS X.  Then use Homebrew to install CMake by running the following command in a Terminal:
 
     brew install cmake
 
-Download the source code of this library and navigate to the top-level directory using `cd`.
-
-Run these commands to build the library and install it:
+Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands in a Terminal to build the library and install it:
 
     cmake
     make
@@ -147,13 +141,14 @@ The `examples` folder of this repository contains some example code that uses li
 
 ## Versioning
 
-This library uses Semantic Versioning 2.0.0 from semver.org.
+The version numbers used by this library follow the rules of [Semantic Versioning 2.0.0](http://semver.org/).
 
 A backwards-incompatible version of this library might be released in the future.
 If that happens, the new version will have a different major version number: its version number will be 2.0.0 and it will be known as libusbp-2 to pkg-config.
-This library was designed to support having different major versions installed side-by-side on the same computer, so you could have both libusbp-1 and libusbp-2 installed.
+This library was designed to support having different major versions installed side-by-side on the same computer, so you could have both libusbp-1 and libusbp-2 installed at the same time.
+However, you would not be able to use both versions from a single program.
 
-If you write software that depends on libusbp, we recommend specifying which major version of libusbp your software uses in both the documentation of your software and in the scripts used to build it.  Scripts or instructions for downloading the source code of libusbp should use a branch name to ensure that they downlod the latest version of the code for a given major version number.  For example, the v1 branch of this repository will always point to the latest stable release of libusbp-1.
+If you write software that depends on libusbp, we recommend specifying which major version of libusbp your software uses in both the documentation of your software and in the scripts used to build it.  Scripts or instructions for downloading the source code of libusbp should use a branch name to ensure that they downlod the latest version of the code for a given major version number.  For example, the branch of this repository named "v1" will always point to the latest release of libusbp-1.
 
 
 ## Documentation
