@@ -148,7 +148,7 @@ If that happens, the new version will have a different major version number: its
 This library was designed to support having different major versions installed side-by-side on the same computer, so you could have both libusbp-1 and libusbp-2 installed at the same time.
 However, you would not be able to use both versions from a single program.
 
-If you write software that depends on libusbp, we recommend specifying which major version of libusbp your software uses in both the documentation of your software and in the scripts used to build it.  Scripts or instructions for downloading the source code of libusbp should use a branch name to ensure that they downlod the latest version of the code for a given major version number.  For example, the branch of this repository named "v1" will always point to the latest release of libusbp-1.
+If you write software that depends on libusbp, we recommend specifying which major version of libusbp your software uses in both the documentation of your software and in the scripts used to build it.  Scripts or instructions for downloading the source code of libusbp should use a branch name to ensure that they downlod the latest version of the code for a given major version number.  For example, the branch of this repository named "v1-latest" will always point to the latest release of libusbp-1.
 
 
 ## Documentation
