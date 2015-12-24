@@ -1,4 +1,4 @@
-# libusbp &mdash; Pololu USB Library
+# libusbp: Pololu USB Library
 
 Version: 1.0.0<br/>
 Release date: 2015 Dec 24<br/>
