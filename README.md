@@ -1,4 +1,4 @@
-# libusbp - Pololu USB Library
+# libusbp &mdash; Pololu USB Library
 
 Version: 1.0.0<br/>
 Release date: 2015 Dec 24<br/>
@@ -62,7 +62,7 @@ After installing MSYS2, select "MinGW-w64 Win32 shell" from the Start Menu.  The
 
 Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands to build the library and install it:
 
-    MSYS2_ARG_CONV_EXCL= cmake -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
+    MSYS2_ARG_CONV_EXCL= cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=/mingw32
     make install DESTDIR=/
 
 We currently do not provide any build files for Visual Studio.  You can use CMake to generate Visual Studio build files, and the library and its examples will probably compile, but we have not tested the resulting library.
@@ -82,7 +82,7 @@ On Arch Linux, libudev should already be installed, and you can install CMake by
 
 Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands to build the library and install it:
 
-    cmake
+    cmake .
     make
     sudo make install
 
@@ -95,7 +95,7 @@ First, install [Homebrew](http://brew.sh/), a package manager for Mac OS X.  The
 
 Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands in a Terminal to build the library and install it:
 
-    cmake
+    cmake .
     make
     sudo make install
 
@@ -144,7 +144,7 @@ The `examples` folder of this repository contains some example code that uses li
 The version numbers used by this library follow the rules of [Semantic Versioning 2.0.0](http://semver.org/).
 
 A backwards-incompatible version of this library might be released in the future.
-If that happens, the new version will have a different major version number: its version number will be 2.0.0 and it will be known as libusbp-2 to pkg-config.
+If that happens, the new version will have a different major version number: its version number will be 2.0.0 and it will be known as libusbp-2 to `pkg-config`.
 This library was designed to support having different major versions installed side-by-side on the same computer, so you could have both libusbp-1 and libusbp-2 installed at the same time.
 However, you would not be able to use both versions from a single program.
 
