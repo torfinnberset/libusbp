@@ -68,7 +68,7 @@ static void broadcast_setting_change_core(install_context * context)
 	{
 		WCHAR message[1024];
 		StringCbPrintfW(message, sizeof(message),
-            L"SendMessageTimeout failed: Error code %d.  Result %d",
+            L"SendMessageTimeout failed: Error code 0x%lx.  Result %d",
             GetLastError(), result2);
 		error_message(context, message);
 	}
@@ -112,7 +112,7 @@ static void install_inf_core(install_context * context, LPWSTR filename)
             L"There was an error installing the driver file %s.  \n"
 			L"You might have to manually install this file by right-clicking it "
             L"and selecting \"Install\".  \n"
-			L"Error code %d.", filename, GetLastError());
+			L"Error code 0x%lx.", filename, GetLastError());
 		error_message(context, message);
 	}
 }
