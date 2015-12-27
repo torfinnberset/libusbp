@@ -121,6 +121,7 @@ TEST_CASE("serial port parameter validation and corner cases")
     }
 }
 
+#ifdef USE_TEST_DEVICE_A
 TEST_CASE("test device A serial port")
 {
     libusbp::device device = find_test_device_a();
@@ -177,3 +178,4 @@ TEST_CASE("test device A serial port")
         REQUIRE(sp2.get_name() == sp.get_name());
     }
 }
+#endif
