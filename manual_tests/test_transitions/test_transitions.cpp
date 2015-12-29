@@ -13,7 +13,11 @@
 #include <unistd.h>
 #endif
 
+#if defined(__GNUC__) && !defined(__clang__) && __GNUC__ == 4 && __GNUC_MINOR__ <= 6
+typedef std::chrono::monotonic_clock clock_type;
+#else
 typedef std::chrono::steady_clock clock_type;
+#endif
 
 std::ostream & log()
 {
