@@ -15,7 +15,10 @@
 #include <string>
 #include <vector>
 
-#if (__cplusplus <= 199711L) && !defined(_MSC_VER)
+/** Display a nice error if C++11 is not enabled (e.g. --std=c++11 or --std=gnu++11).
+ * The __GXX_EXPERIMENTAL_CXX0X__ check is needed for GCC 4.6, which defines __cplusplus as 1.
+ * The _MSC_VER check is needed for Visual Studio 2015. */
+#if (!defined(__cplusplus) || (__cplusplus < 201103L)) && !defined(__GXX_EXPERIMENTAL_CXX0X__) && !defined(_MSC_VER)
 #error This header requires features from C++11.
 #endif
 
@@ -196,7 +199,7 @@ namespace libusbp
 
         /*! Move constructor. */
         unique_pointer_wrapper_with_copy(
-            unique_pointer_wrapper_with_copy && other) noexcept = default;
+            unique_pointer_wrapper_with_copy && other) = default;
 
         /*! Copy constructor */
         unique_pointer_wrapper_with_copy(
@@ -215,7 +218,7 @@ namespace libusbp
 
         /*! Move assignment operator. */
         unique_pointer_wrapper_with_copy & operator=(
-            unique_pointer_wrapper_with_copy && other) noexcept = default;
+            unique_pointer_wrapper_with_copy && other) = default;
     };
 
     /*! Wrapper for a ::libusbp_error pointer. */
