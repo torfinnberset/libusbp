@@ -199,7 +199,7 @@ namespace libusbp
 
         /*! Move constructor. */
         unique_pointer_wrapper_with_copy(
-            unique_pointer_wrapper_with_copy && other) noexcept = default;
+            unique_pointer_wrapper_with_copy && other) = default;
 
         /*! Copy constructor */
         unique_pointer_wrapper_with_copy(
@@ -218,7 +218,7 @@ namespace libusbp
 
         /*! Move assignment operator. */
         unique_pointer_wrapper_with_copy & operator=(
-            unique_pointer_wrapper_with_copy && other) noexcept = default;
+            unique_pointer_wrapper_with_copy && other) = default;
     };
 
     /*! Wrapper for a ::libusbp_error pointer. */
