@@ -17,7 +17,7 @@ BEGIN
             VALUE "FileVersion",      VERSION_STR
             VALUE "ProductName",      "Pololu USB Library"
             VALUE "ProductVersion",   VERSION_STR
-            VALUE "LegalCopyright",   "Copyright (C) 2015 Pololu Corporation"
+            VALUE "LegalCopyright",   "Copyright (C) ${YEAR} Pololu Corporation"
         END
     END
 

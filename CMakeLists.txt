@@ -50,6 +50,8 @@ set (LIBUSBP_VERSION_PATCH 0)
 
 set (LIBUSBP_VERSION ${LIBUSBP_VERSION_MAJOR}.${LIBUSBP_VERSION_MINOR}.${LIBUSBP_VERSION_PATCH})
 
+string(TIMESTAMP YEAR "%Y")
+
 # Put libraries and executables in the top level of the build directory
 # so that the executables can find the libraries and it is easy to run
 # everything.
