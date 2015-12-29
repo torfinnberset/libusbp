@@ -18,7 +18,7 @@ class test_timeout
 {
     // monotonic_clock was renamed to steady_clock, but GCC 4.6 only defines
     // monotonic_clock, and later versions only define steady_clock.
-#if defined(__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ <= 6
+#if defined(__GNUC__) && !defined(__clang__) && __GNUC__ == 4 && __GNUC_MINOR__ <= 6
     typedef std::chrono::monotonic_clock clock;
 #else
     typedef std::chrono::steady_clock clock;
