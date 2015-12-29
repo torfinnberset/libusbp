@@ -16,10 +16,14 @@ libusbp::device find_test_device_b();
 
 class test_timeout
 {
+    // monotonic_clock was renamed to steady_clock, but we use
+    // monotonic_clock here to support GCC 4.6.
+    typedef std::chrono::monotonic_clock clock;
+
 public:
     test_timeout(uint32_t timeout_ms)
     {
-        start = std::chrono::steady_clock::now();
+        start = clock::now();
         this->timeout_ms = timeout_ms;
     }
 
@@ -33,13 +37,13 @@ public:
 
     uint32_t get_milliseconds()
     {
-        std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
+        clock::time_point now = clock::now();
         return std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
     }
 
 private:
     uint32_t timeout_ms;
-    std::chrono::steady_clock::time_point start;
+    clock::time_point start;
 };
 
 #ifdef _WIN32
