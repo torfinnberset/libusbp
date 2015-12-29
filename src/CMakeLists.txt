@@ -7,7 +7,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
 
   # Don't warn about zero-length format strings, which we sometimes
   # use when constructing error objectss.
-  set (CMAKE_C_FLAGS "-Wno-format-zero-length ${CMAKE_C_FLAGS}")
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-format-zero-length")
 
   # Avoid tons of errors from strsafe.h.
   set (CMAKE_C_FLAGS "-fgnu89-inline ${CMAKE_C_FLAGS}")
