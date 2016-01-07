@@ -13,9 +13,9 @@ BEGIN
         BLOCK "040904E4"
         BEGIN
             VALUE "CompanyName",      "Pololu Corporation"
-            VALUE "FileDescription",  "Pololu USB Library, ${CMAKE_BUILD_TYPE}"
+            VALUE "FileDescription",  "Pololu USB Library"
             VALUE "FileVersion",      VERSION_STR
-            VALUE "ProductName",      "Pololu USB Library"
+            VALUE "ProductName",      "Pololu USB Library (${CMAKE_BUILD_TYPE})"
             VALUE "ProductVersion",   VERSION_STR
             VALUE "LegalCopyright",   "Copyright (C) ${YEAR} Pololu Corporation"
         END
