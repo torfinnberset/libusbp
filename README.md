@@ -72,7 +72,7 @@ We currently do not provide any build files for Visual Studio.  You can use CMak
 
 First, you will need to make sure that you have a suitable compiler installed, such as gcc.  You can run `gcc -v` in a shell to make sure it is available.
 
-You will also need to install CMake and libudev.  On Ubuntu, the command to do this is:
+You will also need to install CMake and libudev.  On Ubuntu, Raspbian, and other Debian-based distributions, the command to do this is:
 
     sudo apt-get install cmake libudev-dev
 
