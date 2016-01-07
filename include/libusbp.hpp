@@ -458,6 +458,12 @@ namespace libusbp
             throw_if_needed(libusbp_generic_handle_open(gi.pointer_get(), &pointer));
         }
 
+        /*! Wrapper for libusbp_generic_handle_close(). */
+        void close() noexcept
+        {
+            pointer_reset();
+        }
+
         /*! Wrapper for libusbp_generuc_handle_open_async_in_pipe(). */
         async_in_pipe open_async_in_pipe(uint8_t pipe_id)
         {

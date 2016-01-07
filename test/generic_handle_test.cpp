@@ -44,6 +44,12 @@ TEST_CASE("null generic_handle")
         REQUIRE_FALSE(handle);
     }
 
+    SECTION("can be closed (but it makes no difference)")
+    {
+        handle.close();
+        REQUIRE_FALSE(handle);
+    }
+
     SECTION("cannot open async pipes")
     {
         try
@@ -178,6 +184,12 @@ TEST_CASE("generic_handle instance", "[ghitda]")
         libusbp::generic_handle handle2;
         handle2 = std::move(handle);
         REQUIRE(handle2);
+        REQUIRE_FALSE(handle);
+    }
+
+    SECTION("can be closed")
+    {
+        handle.close();
         REQUIRE_FALSE(handle);
     }
 
