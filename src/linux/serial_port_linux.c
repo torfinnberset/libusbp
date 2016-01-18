@@ -16,6 +16,8 @@ libusbp_error * libusbp_serial_port_create(
     bool composite,
     libusbp_serial_port ** port)
 {
+    LIBUSBP_UNUSED(composite);
+
     if (port == NULL)
     {
         return error_create("Serial port output pointer is null.");
