@@ -9,7 +9,7 @@ const uint16_t product_id = 0xDA01;
 const uint8_t interface_number = 2;
 const bool composite = true;
 
-int main_with_exceptions(int argc, char ** argv)
+int main_with_exceptions()
 {
     libusbp::device device = libusbp::find_device_with_vid_pid(vendor_id, product_id);
     if (!device)
@@ -27,9 +27,13 @@ int main_with_exceptions(int argc, char ** argv)
 
 int main(int argc, char ** argv)
 {
+    // Suppress unused parameter warnings.
+    (void)argc;
+    (void)argv;
+
     try
     {
-        return main_with_exceptions(argc, argv);
+        return main_with_exceptions();
     }
     catch(const std::exception & error)
     {

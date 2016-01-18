@@ -1,11 +1,12 @@
 #include <test_helper.h>
 
-// Note: A lot of these tests are inherently racy because they test asynchronous
-// transfers.  If they occasionally fail, some parameters may need to be
-// adjusted.
+// Note: A lot of these tests make specific assumptions about the timing of
+// various operations.  If the tests fail intermittently, some parameters may
+// need to be adjusted.
 
 const uint8_t pipe_id = 0x82;
 
+#ifdef USE_TEST_DEVICE_A
 static void check_error_for_cancelled_transfer(const libusbp::error & error)
 {
     if (!error)
@@ -69,6 +70,7 @@ static void clean_up_async_in_pipe_and_expect_a_success(libusbp::async_in_pipe &
     }
     REQUIRE(success_count > 0);
 }
+#endif
 
 TEST_CASE("async_in_pipe traits")
 {

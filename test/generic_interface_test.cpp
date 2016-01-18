@@ -160,6 +160,7 @@ TEST_CASE("generic interface parameter validation and corner cases")
 }
 #endif
 
+#ifdef USE_TEST_DEVICE_A
 static void assert_not_ready(
     const libusbp::device & device, uint8_t interface_number, bool composite)
 {
@@ -215,6 +216,7 @@ static void assert_no_driver(
             "Device is not using any driver.");
     }
 }
+#endif
 #endif
 
 #ifdef USE_TEST_DEVICE_A
