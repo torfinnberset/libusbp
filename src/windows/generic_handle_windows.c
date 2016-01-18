@@ -249,5 +249,6 @@ HANDLE libusbp_generic_handle_get_winusb_handle(libusbp_generic_handle * handle)
 
 libusbp_error * generic_handle_events(libusbp_generic_handle * handle)
 {
+    LIBUSBP_UNUSED(handle);
     return NULL;
 }

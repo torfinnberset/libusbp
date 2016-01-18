@@ -257,11 +257,6 @@ libusbp_error * libusbp_generic_interface_create(
 
     *gi = NULL;
 
-    if (interface_number < -1)
-    {
-        return error_create("Invalid interface number: %d.", interface_number);
-    }
-
     if (device == NULL)
     {
         return error_create("Device is null.");
