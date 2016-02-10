@@ -51,7 +51,7 @@ void print_device(libusbp::device & device)
     std::cout.flags(flags);
 }
 
-int main_with_exceptions(int argc, char ** argv)
+int main_with_exceptions()
 {
     std::vector<libusbp::device> list = libusbp::list_connected_devices();
     for (auto it = list.begin(); it != list.end(); ++it)
@@ -63,9 +63,13 @@ int main_with_exceptions(int argc, char ** argv)
 
 int main(int argc, char ** argv)
 {
+    // Suppress unused parameter warnings.
+    (void)argc;
+    (void)argv;
+
     try
     {
-        return main_with_exceptions(argc, argv);
+        return main_with_exceptions();
     }
     catch(const std::exception & error)
     {

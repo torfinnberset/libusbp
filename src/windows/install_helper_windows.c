@@ -76,8 +76,11 @@ static void broadcast_setting_change_core(install_context * context)
 
 // Usage: rundll32 libusbp*.dll libusbp_broadcast_setting_change
 void __stdcall libusbp_broadcast_setting_changeW(
-    HWND owner, HINSTANCE instance, LPWSTR args, int n)
+    HWND owner, HINSTANCE hinst, LPWSTR args, int n)
 {
+    LIBUSBP_UNUSED(hinst);
+    LIBUSBP_UNUSED(args);
+    LIBUSBP_UNUSED(n);
     install_context context = {0};
     context.owner = owner;
 	broadcast_setting_change_core(&context);
@@ -120,6 +123,9 @@ static void install_inf_core(install_context * context, LPWSTR filename)
 // Usage: rundll32 libusbp*.dll libusbp_install_inf path
 void __stdcall libusbp_install_infW(HWND owner, HINSTANCE hinst, LPWSTR args, int n)
 {
+    LIBUSBP_UNUSED(hinst);
+    LIBUSBP_UNUSED(args);
+    LIBUSBP_UNUSED(n);
     install_context context = {0};
     context.owner = owner;
     install_inf_core(&context, args);

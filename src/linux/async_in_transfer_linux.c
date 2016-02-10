@@ -10,6 +10,8 @@ struct async_in_transfer
 
 libusbp_error * async_in_pipe_setup(libusbp_generic_handle * handle, uint8_t pipe_id)
 {
+    LIBUSBP_UNUSED(handle);
+    LIBUSBP_UNUSED(pipe_id);
     return NULL;
 }
 
@@ -148,7 +150,7 @@ libusbp_error * async_in_transfer_get_results(async_in_transfer * transfer,
     size_t tmp_transferred = transfer->urb.actual_length;
 
     // Make sure we don't overflow the user's buffer.
-    if (tmp_transferred > transfer->urb.buffer_length)
+    if (tmp_transferred > (size_t)transfer->urb.buffer_length)
     {
         tmp_transferred = transfer->urb.buffer_length;
     }

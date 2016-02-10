@@ -75,6 +75,9 @@
 #define LIBUSBP_PRINTF(f, a) __attribute__((format (printf, f, a)))
 #endif
 
+// Suppresses unused parameter warnings.
+#define LIBUSBP_UNUSED(param_name) (void)param_name;
+
 #define MAX_ENDPOINT_NUMBER 15
 
 typedef struct libusbp_setup_packet

@@ -63,7 +63,7 @@ void check_test_device_a(libusbp::device device)
     }
 }
 
-int main_with_exceptions(int argc, char ** argv)
+int main_with_exceptions()
 {
     std::cout
         << "Clock tick period: "
@@ -82,9 +82,13 @@ int main_with_exceptions(int argc, char ** argv)
 
 int main(int argc, char ** argv)
 {
+    // Suppress unused parameter warnings.
+    (void)argc;
+    (void)argv;
+
     try
     {
-        return main_with_exceptions(argc, argv);
+        return main_with_exceptions();
     }
     catch(const std::exception & error)
     {

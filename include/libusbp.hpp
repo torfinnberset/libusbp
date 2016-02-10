@@ -204,6 +204,7 @@ namespace libusbp
         /*! Copy constructor */
         unique_pointer_wrapper_with_copy(
             const unique_pointer_wrapper_with_copy & other)
+            : unique_pointer_wrapper<T>()
         {
             this->pointer = pointer_copy(other.pointer);
         }
