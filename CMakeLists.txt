@@ -13,6 +13,12 @@ if (NOT BUILD_SHARED_LIBS)
   add_definitions (-DLIBUSBP_STATIC)
 endif ()
 
+set(ENABLE_EXAMPLES FALSE CACHE BOOL
+  "True if you want to build the examples.")
+
+set(ENABLE_TESTS FALSE CACHE BOOL
+  "True if you want to build the tests.")
+
 set(LIBUSBP_LOG FALSE CACHE BOOL
   "Output log messages to stderr for debugging.")
 
@@ -107,6 +113,12 @@ install(FILES include/libusbp.h include/libusbp.hpp
   DESTINATION "include/libusbp-${LIBUSBP_VERSION_MAJOR}")
 
 add_subdirectory (src)
-add_subdirectory (test)
-add_subdirectory (manual_tests)
-add_subdirectory (examples)
+
+if (ENABLE_TESTS)
+  add_subdirectory (test)
+  add_subdirectory (manual_tests)
+endif ()
+
+if (ENABLE_EXAMPLES)
+  add_subdirectory (examples)
+endif ()
