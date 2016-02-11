@@ -184,7 +184,6 @@ static libusbp_error * set_configuration_and_get_service(
     }
 
     // Get the io_service_t for the interface.
-    io_service_t interface_service = MACH_PORT_NULL;
     if (error == NULL)
     {
         error = service_get_usb_interface(device_service, interface_number, service);

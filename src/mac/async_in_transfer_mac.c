@@ -92,6 +92,8 @@ libusbp_error * async_in_transfer_create(
 
 libusbp_error * async_in_pipe_setup(libusbp_generic_handle * gh, uint8_t pipe_id)
 {
+    LIBUSBP_UNUSED(gh);
+    LIBUSBP_UNUSED(pipe_id);
     return NULL;
 }
 
