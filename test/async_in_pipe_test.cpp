@@ -587,13 +587,14 @@ TEST_CASE("async_in_pipe for an interrupt endpoint")
                 {
                     // Timeout.
 
-                    REQUIRE(transfer_error.message() ==
+                    const char * expected =
                         "Asynchronous IN transfer failed.  "
                         "The operation timed out.  "
                         #ifdef _WIN32
                         "Windows error code 0x79."
                         #endif
-                        );
+                        ;
+                    REQUIRE(transfer_error.message() == expected);
                     timeout_count++;
                 }
                 else

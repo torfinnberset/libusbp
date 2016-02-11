@@ -53,7 +53,7 @@ TEST_CASE("control transfers (synchronous) for Test Device A", "[ctstda]")
         }
         catch(const libusbp::error & error)
         {
-            REQUIRE(std::string(error.what()) ==
+            const char * expected =
                 "Control transfer failed.  "
                 "The request was invalid or there was an I/O problem.  "
                 #if defined(_WIN32)
@@ -63,7 +63,8 @@ TEST_CASE("control transfers (synchronous) for Test Device A", "[ctstda]")
                 #elif defined(__APPLE__)
                 "Error code 0xe000404f."
                 #endif
-                );
+                ;
+            REQUIRE(std::string(error.what()) == expected);
             REQUIRE(error.has_code(LIBUSBP_ERROR_STALL));
         }
     }

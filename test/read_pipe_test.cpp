@@ -107,7 +107,7 @@ TEST_CASE("read_pipe (synchronous) on an interrupt endpoint ", "[rpi]")
     libusbp::generic_handle handle(gi);
     const uint8_t pipe = 0x82;
     size_t transferred = 0xFFFF;
-    size_t packet_size = 5;
+    const size_t packet_size = 5;
 
     // Unpause the ADC if it was paused by some previous test.
     handle.control_transfer(0x40, 0xA0, 0, 0);
@@ -155,7 +155,7 @@ TEST_CASE("read_pipe (synchronous) on an interrupt endpoint ", "[rpi]")
         }
         catch(const libusbp::error & error)
         {
-            REQUIRE(error.message() ==
+            const char * expected =
                 "Failed to read from pipe.  "
                 "The transfer overflowed.  "
                 #if defined(_WIN32)
@@ -164,7 +164,8 @@ TEST_CASE("read_pipe (synchronous) on an interrupt endpoint ", "[rpi]")
                 #elif defined(__APPLE__)
                 "Error code 0xe00002e8."
                 #endif
-                );
+                ;
+            REQUIRE(error.message() == expected);
 
             #ifdef __APPLE__
             REQUIRE(transferred == packet_size + 1);
@@ -217,7 +218,7 @@ TEST_CASE("read_pipe (synchronous) on an interrupt endpoint ", "[rpi]")
         }
         catch(const libusbp::error & error)
         {
-            REQUIRE(std::string(error.what()) ==
+            const char * expected =
                 "Failed to read from pipe.  "
                 "The operation timed out.  "
                 #ifdef _WIN32
@@ -225,7 +226,8 @@ TEST_CASE("read_pipe (synchronous) on an interrupt endpoint ", "[rpi]")
                 #elif defined(__linux__)
                 "Error code 110."
                 #endif
-                );
+                ;
+            REQUIRE(std::string(error.what()) == expected);
             REQUIRE(error.has_code(LIBUSBP_ERROR_TIMEOUT));
 
             #ifdef _WIN32
