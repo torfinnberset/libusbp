@@ -120,3 +120,7 @@ endif ()
 if (ENABLE_EXAMPLES)
   add_subdirectory (examples)
 endif ()
+
+if (WIN32)
+  add_subdirectory (install_helper)
+endif ()

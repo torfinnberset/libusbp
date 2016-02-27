@@ -11,12 +11,6 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
 
   # Avoid tons of errors from strsafe.h.
   set (CMAKE_C_FLAGS "-fgnu89-inline ${CMAKE_C_FLAGS}")
-
-  if (WIN32)
-    # Avoid a warning about stdcall fixup, where the linker resolves symbols
-    # like "foo" in our .def file by linking to something like "_foo@4".
-    set (link_flags "-Wl,--enable-stdcall-fixup ${link_flags}")
-  endif ()
 endif ()
 
 # Define cross-platform source files.
@@ -41,8 +35,6 @@ if (WIN32)
     windows/generic_handle_windows.c
     windows/async_in_transfer_windows.c
     windows/serial_port_windows.c
-    windows/install_helper_windows.c
-    windows/dll.def
     ${CMAKE_CURRENT_BINARY_DIR}/info.rc)
 elseif (LINUX)
   set (sources ${sources}
@@ -83,7 +75,7 @@ include_directories (
 )
 
 if (WIN32)
-  target_link_libraries (usbp setupapi winusb uuid msi)
+  target_link_libraries (usbp setupapi winusb uuid)
 elseif (LINUX)
   target_link_libraries (usbp udev)
 elseif (APPLE)

@@ -1,17 +1,13 @@
-/* This file contains special functions that are defined in the Windows version
- * of this DLL which can help install an application that uses USB.
- *
- * This part of the library introduces a dependency on msi.dll.  We aren't
- * totally sure whether these functions should really be in libusbp-1.dll, or if
- * they should be in a separate DLL.  Therefore, for now, we consider these
- * functions to NOT be part of the public API, and they could be removed in
- * future versions without considering it a breaking change.
- *
-*/
+/* This file contains special functions that can help install an application
+ * that uses USB.  The functions can be used from an MSI custom action or from
+ * rundll32. */
 
-#include <libusbp_internal.h>
+#include <windows.h>
 #include <MsiQuery.h>
+#include <setupapi.h>
 #include <strsafe.h>
+
+#define LIBUSBP_UNUSED(param_name) (void)param_name;
 
 typedef struct install_context
 {
