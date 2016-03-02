@@ -1,7 +1,7 @@
 # libusbp: Pololu USB Library
 
 Version: 1.0.0<br/>
-Release date: 2015 Dec 29<br/>
+Release date: 2016 Mar 02<br/>
 [www.pololu.com](https://www.pololu.com/)
 
 The **Pololu USB Library** (also known as **libusbp**) is a cross-platform C library for accessing USB devices.
@@ -158,4 +158,4 @@ For detailed documentation of this library, see the header files `libusb.h` and 
 
 ## Version history
 
-* 1.0.0 (2015 Dec 29): Original release.
+* 1.0.0 (2016 Mar 02): Original release.
