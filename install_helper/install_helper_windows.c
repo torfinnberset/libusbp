@@ -58,7 +58,7 @@ static void error_message(install_context * context, LPCWSTR message)
 static void broadcast_setting_change_core(install_context * context)
 {
 	DWORD_PTR result2 = 0;
-	LRESULT result = SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
+	LRESULT result = SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, 0,
         (LPARAM)L"Environment", SMTO_ABORTIFHUNG, 5000, &result2);
 	if (result == 0)
 	{
