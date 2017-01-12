@@ -67,11 +67,11 @@ TEST_CASE("error_create_winapi", "[error_create_winapi]")
         // like either of them might be used to indicate that the system is out
         // memory.
         SetLastError(ERROR_OUTOFMEMORY);
-        error.pointer_reset(error_create_winapi(""));
+        error.pointer_reset(error_create_winapi("Hi."));
         CHECK(error.has_code(LIBUSBP_ERROR_MEMORY));
 
         SetLastError(ERROR_NOT_ENOUGH_MEMORY);
-        error.pointer_reset(error_create_winapi(""));
+        error.pointer_reset(error_create_winapi("Hi."));
         CHECK(error.has_code(LIBUSBP_ERROR_MEMORY));
     }
 
