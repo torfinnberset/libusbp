@@ -3,6 +3,7 @@
  * rundll32. */
 
 #include <windows.h>
+#include <devpropdef.h>
 #include <MsiQuery.h>
 #include <setupapi.h>
 #include <strsafe.h>

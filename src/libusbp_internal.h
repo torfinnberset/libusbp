@@ -21,6 +21,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <devpropdef.h>
 #include <setupapi.h>
 #include <cfgmgr32.h>
 #include <usbiodef.h>
