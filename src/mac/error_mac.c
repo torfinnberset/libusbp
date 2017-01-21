@@ -13,6 +13,11 @@ libusbp_error * error_create_mach(kern_return_t error_code, const char * format,
         skip_standard_message = true;
         error = error_add(error, "The request was invalid or there was an I/O problem.");
         error = error_add_code(error, LIBUSBP_ERROR_STALL);
+        error = error_add_code(error, LIBUSBP_ERROR_DEVICE_DISCONNECTED);
+        break;
+
+    case kIOReturnNoDevice:
+        error = error_add_code(error, LIBUSBP_ERROR_DEVICE_DISCONNECTED);
         break;
 
     case kIOUSBTransactionTimeout:
