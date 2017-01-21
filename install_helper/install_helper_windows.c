@@ -4,7 +4,7 @@
 
 #include <windows.h>
 #include <devpropdef.h>
-#include <MsiQuery.h>
+#include <msiquery.h>
 #include <setupapi.h>
 #include <strsafe.h>
 
