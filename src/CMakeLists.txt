@@ -100,6 +100,15 @@ configure_file (
   "info.rc"
 )
 
+configure_file (
+  "libusbp.pc.in"
+  "libusbp-${LIBUSBP_VERSION_MAJOR}.pc"
+  @ONLY
+)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libusbp-${LIBUSBP_VERSION_MAJOR}.pc"
+  DESTINATION lib/pkgconfig)
+
 install(TARGETS usbp
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
