@@ -75,12 +75,21 @@ include_directories (
 )
 
 if (WIN32)
-  target_link_libraries (usbp setupapi winusb uuid)
+  target_link_libraries (usbp setupapi winusb uuid ole32)
+  if (NOT BUILD_SHARED_LIBS)
+    set (PC_MORE_LIBS "-lsetupapi -lwinusb -luuid -lole32")
+  endif ()
 elseif (LINUX)
   target_link_libraries (usbp udev)
+  if (NOT BUILD_SHARED_LIBS)
+    set (PC_MORE_LIBS "-ludev")
+  endif ()
 elseif (APPLE)
   set (link_flags "-framework IOkit -framework CoreFoundation ${link_flags}")
-endif()
+  if (NOT BUILD_SHARED_LIBS)
+    set (PC_MORE_LIBS "${link_flags}")
+  endif ()
+endif ()
 
 set_target_properties(usbp PROPERTIES
   OUTPUT_NAME usbp-${LIBUSBP_VERSION_MAJOR}
