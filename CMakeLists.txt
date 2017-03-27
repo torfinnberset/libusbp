@@ -96,16 +96,6 @@ if (NOT CMAKE_VERSION VERSION_LESS "3.0")
   cmake_policy(SET CMP0042 NEW)
 endif ()
 
-# Generate a .pc file and install it.
-configure_file (
-  "libusbp.pc.in"
-  "libusbp-${LIBUSBP_VERSION_MAJOR}.pc"
-  @ONLY
-)
-
-install(FILES "${PROJECT_BINARY_DIR}/libusbp-${LIBUSBP_VERSION_MAJOR}.pc"
-  DESTINATION lib/pkgconfig)
-
 # Install the header files into include/
 install(FILES include/libusbp.h include/libusbp.hpp
   DESTINATION "include/libusbp-${LIBUSBP_VERSION_MAJOR}")

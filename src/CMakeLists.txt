@@ -75,12 +75,21 @@ include_directories (
 )
 
 if (WIN32)
-  target_link_libraries (usbp setupapi winusb uuid)
+  target_link_libraries (usbp setupapi winusb uuid ole32)
+  if (NOT BUILD_SHARED_LIBS)
+    set (PC_MORE_LIBS "-lsetupapi -lwinusb -luuid -lole32")
+  endif ()
 elseif (LINUX)
   target_link_libraries (usbp udev)
+  if (NOT BUILD_SHARED_LIBS)
+    set (PC_MORE_LIBS "-ludev")
+  endif ()
 elseif (APPLE)
   set (link_flags "-framework IOkit -framework CoreFoundation ${link_flags}")
-endif()
+  if (NOT BUILD_SHARED_LIBS)
+    set (PC_MORE_LIBS "${link_flags}")
+  endif ()
+endif ()
 
 set_target_properties(usbp PROPERTIES
   OUTPUT_NAME usbp-${LIBUSBP_VERSION_MAJOR}
@@ -99,6 +108,15 @@ configure_file (
   "info.rc.in"
   "info.rc"
 )
+
+configure_file (
+  "libusbp.pc.in"
+  "libusbp-${LIBUSBP_VERSION_MAJOR}.pc"
+  @ONLY
+)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libusbp-${LIBUSBP_VERSION_MAJOR}.pc"
+  DESTINATION lib/pkgconfig)
 
 install(TARGETS usbp
   RUNTIME DESTINATION bin
