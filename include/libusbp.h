@@ -49,7 +49,7 @@ extern "C" {
 #endif
 
 /*! Some functions in this library return strings to the caller via a char **
- * argument.  If the function call was successful, it is the callers
+ * argument.  If the function call was successful, it is the caller's
  * responsibility to free those strings by passing them to this function.
  * Passing the NULL pointer to this function is OK.  Do not pass any strings to
  * this function unless they were previously returned by a call to this
@@ -271,13 +271,13 @@ typedef struct libusbp_device
  * If this function is successful (the returned error pointer is NULL), then you
  * must later free each device by calling libusbp_device_free() and free the
  * list by calling libusbp_list_free().  The order in which the retrieved
- * objects are freed does not matter .*/
+ * objects are freed does not matter. */
 LIBUSBP_API LIBUSBP_WARN_UNUSED
 libusbp_error * libusbp_list_connected_devices(
     libusbp_device *** device_list,
     size_t * device_count);
 
-/*! Frees a list device list returned by libusbp_list_connected_device(). */
+/*! Frees a device list returned by libusbp_list_connected_device(). */
 LIBUSBP_API
 void libusbp_list_free(libusbp_device ** list);
 
@@ -300,7 +300,7 @@ libusbp_error * libusbp_device_copy(
     libusbp_device ** dest);
 
 /*! Frees a device object.  Passing a NULL pointer to this function is OK.  Do
- * not free the same non-NULL string twice. */
+ * not free the same non-NULL device twice. */
 LIBUSBP_API void libusbp_device_free(libusbp_device *);
 
 /*! Gets the USB vendor ID of the device (idVendor). */
@@ -527,8 +527,8 @@ libusbp_error * libusbp_generic_handle_open(
     const libusbp_generic_interface *,
     libusbp_generic_handle **);
 
-/*! Closes the specified generic handle.  It is OK to pass NULL to this
- * function.  Do not close the same non-NULL handle twice. All
+/*! Closes and frees the specified generic handle.  It is OK to pass NULL to
+ * this function.  Do not close the same non-NULL handle twice. All
  * ::libusbp_async_in_pipe objects created by the handle must be closed before
  * closing the handle. */
 LIBUSBP_API

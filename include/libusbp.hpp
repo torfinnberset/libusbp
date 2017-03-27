@@ -449,7 +449,7 @@ namespace libusbp
         /*! Constructor that takes a pointer.  This object will free the pointer
          *  when it is destroyed. */
         explicit generic_handle(libusbp_generic_handle * pointer = NULL)
-            : unique_pointer_wrapper(pointer)
+            : unique_pointer_wrapper(pointer) noexcept
         {
         }
 
@@ -465,7 +465,7 @@ namespace libusbp
             pointer_reset();
         }
 
-        /*! Wrapper for libusbp_generuc_handle_open_async_in_pipe(). */
+        /*! Wrapper for libusbp_generic_handle_open_async_in_pipe(). */
         async_in_pipe open_async_in_pipe(uint8_t pipe_id)
         {
             libusbp_async_in_pipe * pipe;
@@ -474,7 +474,7 @@ namespace libusbp
             return async_in_pipe(pipe);
         }
 
-        /*! Wrapper for libusbp_generuc_handle_set_timeout(). */
+        /*! Wrapper for libusbp_generic_handle_set_timeout(). */
         void set_timeout(uint8_t pipe_id, uint32_t timeout)
         {
             throw_if_needed(libusbp_generic_handle_set_timeout(pointer, pipe_id, timeout));
