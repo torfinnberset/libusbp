@@ -11,6 +11,7 @@ endif ()
 option (BUILD_SHARED_LIBS "Build as shared library" TRUE)
 if (NOT BUILD_SHARED_LIBS)
   add_definitions (-DLIBUSBP_STATIC)
+  set (PC_MORE_CFLAGS "-DLIBUSBP_STATIC")
 endif ()
 
 set(ENABLE_EXAMPLES FALSE CACHE BOOL
