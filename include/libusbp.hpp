@@ -107,7 +107,8 @@ namespace libusbp
     {
     public:
         /*! Constructor that takes a pointer. */
-        explicit unique_pointer_wrapper(T * p = NULL) noexcept : pointer(p)
+        explicit unique_pointer_wrapper(T * p = NULL) noexcept
+            : pointer(p)
         {
         }
 
@@ -227,8 +228,8 @@ namespace libusbp
     {
     public:
         /*! Constructor that takes a pointer.  */
-        explicit error(libusbp_error * p = NULL) noexcept :
-          unique_pointer_wrapper_with_copy(p)
+        explicit error(libusbp_error * p = NULL) noexcept
+            : unique_pointer_wrapper_with_copy(p)
         {
         }
 
@@ -448,8 +449,8 @@ namespace libusbp
     public:
         /*! Constructor that takes a pointer.  This object will free the pointer
          *  when it is destroyed. */
-        explicit generic_handle(libusbp_generic_handle * pointer = NULL)
-            : unique_pointer_wrapper(pointer) noexcept
+        explicit generic_handle(libusbp_generic_handle * pointer = NULL) noexcept
+            : unique_pointer_wrapper(pointer)
         {
         }
 
