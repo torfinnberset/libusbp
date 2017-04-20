@@ -332,7 +332,8 @@ TEST_CASE("error_create_errno", "[error_create_errno]")
 
 TEST_CASE("error_from_urb_status")
 {
-    struct usbdevfs_urb urb = {0};
+    struct usbdevfs_urb urb;
+    memset(&urb, 0, sizeof(urb));
     libusbp::error error;
 
     SECTION("gives a good message for cancellation (ENOENT)")
