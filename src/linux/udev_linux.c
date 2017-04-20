@@ -239,7 +239,6 @@ static libusbp_error * udevw_check_if_device_is_specific_interface(
 {
     assert(dev != NULL);
     assert(device_syspath != NULL);
-    assert(interface_number >= -1);
     assert(result != NULL);
 
     *result = false;
