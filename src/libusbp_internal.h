@@ -1,10 +1,12 @@
+#ifdef LIBUSBP_DROP_IN
+#include "libusbp.h"
+#else
 #pragma once
-
 #include <libusbp_config.h>
 #include <libusbp.h>
-
 #if BUILD_SYSTEM_LIBUSBP_VERSION_MAJOR != LIBUSBP_VERSION_MAJOR
 #error Major version in libusbp.h disagrees with build system.
+#endif
 #endif
 
 // Don't warn about zero-length format strings, which we sometimes use when
