@@ -1,15 +1,22 @@
 #pragma once
 
-// Silence some warnings from the Microsoft C Compiler.
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include <libusbp_config.h>
 #include <libusbp.h>
 
 #if BUILD_SYSTEM_LIBUSBP_VERSION_MAJOR != LIBUSBP_VERSION_MAJOR
 #error Major version in libusbp.h disagrees with build system.
+#endif
+
+// Don't warn about zero-length format strings, which we sometimes use when
+// constructing error objects.
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wformat-zero-length"
+#endif
+
+// Silence some warnings from the Microsoft C Compiler.
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#define strdup _strdup
 #endif
 
 #include <assert.h>
@@ -28,11 +35,6 @@
 #include <usbioctl.h>
 #include <stringapiset.h>
 #include <winusb.h>
-#endif
-
-// Use _strdup instead of strdup because MSVC warns that strdup is deprecated.
-#ifdef _MSC_VER
-#define strdup _strdup
 #endif
 
 #ifdef __linux__

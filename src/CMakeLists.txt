@@ -5,10 +5,6 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
   # By default, symbols are not visible outside of the library.
   set (CMAKE_C_FLAGS "-fvisibility=hidden ${CMAKE_C_FLAGS}")
 
-  # Don't warn about zero-length format strings, which we sometimes
-  # use when constructing error objectss.
-  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-format-zero-length")
-
   # Avoid tons of errors from strsafe.h.
   set (CMAKE_C_FLAGS "-fgnu89-inline ${CMAKE_C_FLAGS}")
 endif ()
