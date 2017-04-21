@@ -13,6 +13,7 @@ endif ()
 set (sources
   async_in_pipe.c
   error.c
+  error_hresult.c
   find_device.c
   list.c
   pipe_id.c
@@ -21,7 +22,6 @@ set (sources
 # Define operating system-specific source files.
 if (WIN32)
   set (sources ${sources}
-    error_hresult.c
     windows/error_windows.c
     windows/device_windows.c
     windows/interface_windows.c
@@ -45,7 +45,6 @@ elseif (LINUX)
     linux/serial_port_linux.c)
 elseif (APPLE)
   set (sources
-    error_hresult.c
     mac/list_mac.c
     mac/device_mac.c
     mac/error_mac.c

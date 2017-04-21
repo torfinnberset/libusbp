@@ -1,5 +1,7 @@
 #include <libusbp_internal.h>
 
+#ifdef HRESULT
+
 libusbp_error * error_create_hr(HRESULT hr, const char * format, ...)
 {
     // HRESULT should be an int32_t on the systems we care about (Mac OS X,
@@ -15,3 +17,5 @@ libusbp_error * error_create_hr(HRESULT hr, const char * format, ...)
     va_end(ap);
     return error;
 }
+
+#endif
