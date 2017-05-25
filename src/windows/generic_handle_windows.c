@@ -1,5 +1,9 @@
 #include <libusbp_internal.h>
 
+// TODO: add a test for the issue where WinUSB cannot send data from read-only
+// memory, then add a note about it to the documentation for
+// libusbp_control_transfer and PLATFORM_NOTES.md.
+
 struct libusbp_generic_handle
 {
     HANDLE file_handle;
