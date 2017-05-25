@@ -1,6 +1,6 @@
 #include <libusbp_internal.h>
 
-#ifdef HRESULT
+#if defined(_WIN32) || defined(__APPLE__)
 
 libusbp_error * error_create_hr(HRESULT hr, const char * format, ...)
 {
