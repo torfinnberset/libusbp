@@ -72,4 +72,3 @@ Here are some things we might want to work on in future versions of the library:
 - Perhaps use asynchronous operations to implement the synchronous ones, like libusb does.  This would fix some quirks on various platforms: it would allow us to have timeouts for interrupt endpoints on Mac OS X and it would probably allow long synchronous operations on Linux to be interrupted with Ctrl+C.  The main drawback is that it would add complexity.
 - Sending data on OUT pipes.
 - A device library template to help people who want to make a cross-platform C or C++ library for a USB device based on libusbp.
-- You can see other ideas by searching this repository for "TODO".
