@@ -1,6 +1,6 @@
 use_c99()
 
-add_library (install_helper install_helper_windows.c dll.def)
+add_library (install_helper SHARED install_helper_windows.c dll.def)
 
 target_link_libraries (install_helper setupapi msi)
 
