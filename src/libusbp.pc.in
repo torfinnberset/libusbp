@@ -5,6 +5,6 @@ includedir=${prefix}/include
 Name: libusbp
 Version: @LIBUSBP_VERSION@
 Description: Library for accessing USB devices.
-Requires:
+Requires: @PC_REQUIRES@
 Libs: -L${libdir} -lusbp-@LIBUSBP_VERSION_MAJOR@ @PC_MORE_LIBS@
 Cflags: -I${includedir}/libusbp-@LIBUSBP_VERSION_MAJOR@ @PC_MORE_CFLAGS@
