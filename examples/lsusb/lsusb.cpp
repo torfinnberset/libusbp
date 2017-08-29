@@ -5,13 +5,14 @@
 #include <iostream>
 #include <iomanip>
 
-std::string serial_number_or_default(libusbp::device & device, std::string def)
+std::string serial_number_or_default(const libusbp::device & device,
+    const std::string & def)
 {
     try
     {
         return device.get_serial_number();
     }
-    catch(const libusbp::error & error)
+    catch (const libusbp::error & error)
     {
         if (error.has_code(LIBUSBP_ERROR_NO_SERIAL_NUMBER))
         {

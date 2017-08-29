@@ -1,4 +1,5 @@
-/* This example shows how to get the name of a USB serial port (e.g. "COM6"). */
+// This example shows how to get the name of a USB serial port (e.g. "COM6")
+// for a single USB device.
 
 #include <libusbp.hpp>
 #include <iostream>

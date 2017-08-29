@@ -44,7 +44,7 @@ elseif (LINUX)
     linux/async_in_transfer_linux.c
     linux/serial_port_linux.c)
 elseif (APPLE)
-  set (sources
+  set (sources ${sources}
     mac/list_mac.c
     mac/device_mac.c
     mac/error_mac.c
@@ -52,13 +52,7 @@ elseif (APPLE)
     mac/generic_handle_mac.c
     mac/async_in_transfer_mac.c
     mac/serial_port_mac.c
-    mac/iokit_mac.c
-    async_in_pipe.c
-    find_device.c
-    list.c
-    pipe_id.c
-    string.c
-    error.c)
+    mac/iokit_mac.c)
 endif ()
 
 add_library (usbp ${sources})
