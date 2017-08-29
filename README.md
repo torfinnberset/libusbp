@@ -1,6 +1,6 @@
 # libusbp: Pololu USB Library
 
-Version: 1.0.3<br/>
+Version: 1.0.4<br/>
 Release date: 2017-08-29<br/>
 [www.pololu.com](https://www.pololu.com/)
 
@@ -158,6 +158,9 @@ For detailed documentation of this library, see the header files `libusb.h` and 
 
 ## Version history
 
+* 1.0.4 (2017-08-29):
+  * Fixed a compilation error for macOS.
+  * Added the `lsport` example for listing multiple USB serial ports.
 * 1.0.3 (2017-08-29):
   * Compiler flags from libudev.pc are now used.
   * For static builds, libusbp-1.pc now requires libudev.pc instead of copying its flags.
