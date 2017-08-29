@@ -1,12 +1,11 @@
-/* This is test firmware that runs on a Wixel and can be used for
- * testing generic USB PC software.
- *
- * By default, it compiles USB Test Device A, a composite device with two
- * vendor-defined USB interfaces and a serial port.
- *
- * When compiled with the TEST_DEVICE_B option, it compiles USB Test Device B,
- * which is a non-composite device with a single vendor-defined USB interface.
- */
+// This is test firmware that runs on a Wixel and can be used for
+// testing generic USB PC software.
+//
+// By default, it compiles USB Test Device A, a composite device with two
+// vendor-defined USB interfaces and a serial port.
+//
+// When compiled with the TEST_DEVICE_B option, it compiles USB Test Device B,
+// which is a non-composite device with a single vendor-defined USB interface.
 
 #include <board.h>
 #include <usb.h>
