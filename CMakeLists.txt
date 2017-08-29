@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 2.8)
 project (libusbp)
 
+set (LIBUSBP_VERSION_MAJOR 1)
+set (LIBUSBP_VERSION_MINOR 0)
+set (LIBUSBP_VERSION_PATCH 2)
+
 # Make 'Release' be the default build type, since the debug builds
 # include exported symbols that might cause name conflicts.
 if (NOT CMAKE_BUILD_TYPE)
@@ -51,10 +55,6 @@ macro(use_cxx11)
     set (CMAKE_CXX_STANDARD 11)
   endif ()
 endmacro(use_cxx11)
-
-set (LIBUSBP_VERSION_MAJOR 1)
-set (LIBUSBP_VERSION_MINOR 0)
-set (LIBUSBP_VERSION_PATCH 1)
 
 set (LIBUSBP_VERSION ${LIBUSBP_VERSION_MAJOR}.${LIBUSBP_VERSION_MINOR}.${LIBUSBP_VERSION_PATCH})
 
