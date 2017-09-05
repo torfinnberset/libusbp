@@ -4,6 +4,11 @@
 // For each USB device, it prints the USB vendor ID, product ID, and serial
 // number on a line.  Then, on the following lines, it prints any serial port
 // names it found, sorted by interface number, ascending.
+//
+// Note: This example is slow and ugly because libusbp does not yet have
+// built-in support for listing serial ports; it only has support for finding
+// a serial port if you already know what USB device it is connected to and what
+// interface you expect the port to be on.  This might be improved in the future.
 
 #include <libusbp.hpp>
 #include <iostream>
@@ -39,15 +44,12 @@ bool try_print_port_name(const libusbp::device & device,
     {
         return false;
     }
-    std::cout << "  " << port_name << std::endl;    
+    std::cout << "  " << port_name << std::endl;
     return true;
 }
 
 int main_with_exceptions()
 {
-    // NOTE: This part is kind of ugly.  It would be better if libusbp
-    // had built-in support for listing all serial ports.
-
     auto devices = libusbp::list_connected_devices();
     for (const libusbp::device & device : devices)
     {
@@ -66,7 +68,7 @@ int main_with_exceptions()
           << ' '
           << std::setfill(' ') << std::left << serial_number
           << std::endl;
-      std::cout.flags(flags);     
+      std::cout.flags(flags);
 
       // First, assume the device is composite and try the first 16 interfaces.
       // Most devices don't have more interfaces than that.  Trying all 255 possible
