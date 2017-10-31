@@ -1,4 +1,16 @@
 cmake_minimum_required (VERSION 2.8)
+
+# Don't use -rdynamic since it breaks causes musl static linking.
+cmake_policy(SET CMP0065 NEW)
+
+# Fix behavior of CMAKE_CXX_STANDARD when targeting macOS.
+cmake_policy(SET CMP0025 NEW)
+
+# Fix a warning on Mac OS X.
+if (NOT CMAKE_VERSION VERSION_LESS "3.0")
+  cmake_policy(SET CMP0042 NEW)
+endif ()
+
 project (libusbp)
 
 set (LIBUSBP_VERSION_MAJOR 1)
@@ -92,11 +104,6 @@ endif ()
 # Detect Linux.
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set (LINUX 1)
-endif ()
-
-# Fix a warning on Mac OS X.
-if (NOT CMAKE_VERSION VERSION_LESS "3.0")
-  cmake_policy(SET CMP0042 NEW)
 endif ()
 
 # Install the header files into include/
