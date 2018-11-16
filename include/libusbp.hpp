@@ -496,6 +496,14 @@ namespace libusbp
                 buffer, wLength, transferred));
         }
 
+        /*! Wrapper for libusbp_write_pipe(). */
+        void write_pipe(uint8_t pipe_id, const void * buffer,
+            size_t size, size_t * transferred)
+        {
+            throw_if_needed(libusbp_write_pipe(pointer,
+                pipe_id, buffer, size, transferred));
+        }
+
         /*! Wrapper for libusbp_read_pipe(). */
         void read_pipe(uint8_t pipe_id, void * buffer,
             size_t size, size_t * transferred)

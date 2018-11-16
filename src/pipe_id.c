@@ -23,3 +23,11 @@ libusbp_error * check_pipe_id_in(uint8_t pipe_id)
     return check_pipe_id(pipe_id);
 }
 
+libusbp_error * check_pipe_id_out(uint8_t pipe_id)
+{
+    if (pipe_id & 0x80)
+    {
+        return error_invalid_pipe_id(pipe_id);
+    }
+    return check_pipe_id(pipe_id);
+}

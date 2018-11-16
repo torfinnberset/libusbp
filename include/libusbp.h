@@ -592,6 +592,25 @@ libusbp_error * libusbp_control_transfer(
     uint16_t wLength,
     size_t * transferred);
 
+/*! Performs a synchronous (blocking) write of data to a bulk or interrupt
+ * endpoint.
+ *
+ * The @a pipe_id parameter specifies which endpoint to use.  This argument
+ * should be bEndpointAddress value from one of the device's IN endpoint
+ * descriptors.  (Its most significant bit must be 0.)
+ *
+ * The @a transferred parameter is an optional pointer to a variable that will
+ * receive the number of bytes transferred. */
+LIBUSBP_API LIBUSBP_WARN_UNUSED
+libusbp_error * libusbp_write_pipe(
+    libusbp_generic_handle *,
+    uint8_t pipe_id,
+    const void * buffer,
+    size_t size,
+    size_t * transferred);
+// TODO: Document whether, under Linux, this can be interrupted with Ctrl+C
+// TODO: add automated tests for this
+
 /*! Performs a synchronous (blocking) read of data from a bulk or interrupt
  * endpoint.
  *
@@ -605,7 +624,7 @@ libusbp_error * libusbp_control_transfer(
  *
  * The @a pipe_id parameter specifies which endpoint to use.  This argument
  * should be bEndpointAddress value from one of the device's IN endpoint
- * descriptors.  (Its most significant bit must be set.)
+ * descriptors.  (Its most significant bit must be 1.)
  *
  * The @a transferred parameter is an optional pointer to a variable that will
  * receive the number of bytes transferred. */

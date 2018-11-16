@@ -182,6 +182,69 @@ libusbp_error * libusbp_control_transfer(
     return NULL;
 }
 
+libusbp_error * libusbp_write_pipe(
+    libusbp_generic_handle * handle,
+    uint8_t pipe_id,
+    const void * data,
+    size_t size,
+    size_t * transferred)
+{
+    if (transferred != NULL)
+    {
+        *transferred = 0;
+    }
+
+    if (handle == NULL)
+    {
+        return error_create("Generic handle is null.");
+    }
+
+    libusbp_error * error = NULL;
+
+    if (error == NULL)
+    {
+        error = check_pipe_id_out(pipe_id);
+    }
+
+    if (error == NULL && size == 0)
+    {
+        error = error_create("Transfer size 0 is not allowed.");
+    }
+
+    if (error == NULL && size > ULONG_MAX)
+    {
+        error = error_create("Transfer size is too large.");
+    }
+
+    if (error == NULL && data == NULL)
+    {
+        error = error_create("Buffer is null.");
+    }
+
+    ULONG winusb_transferred = 0;
+    if (error == NULL)
+    {
+        BOOL success = WinUsb_WritePipe(handle->winusb_handle, pipe_id, data,
+            size, &winusb_transferred, NULL);
+        if (!success)
+        {
+            error = error_create_winapi("");
+        }
+    }
+
+    if (transferred)
+    {
+        *transferred = winusb_transferred;
+    }
+
+    if (error != NULL)
+    {
+        error = error_add(error, "Failed to write to pipe.");
+    }
+
+    return error;
+}
+
 libusbp_error * libusbp_read_pipe(
     libusbp_generic_handle * handle,
     uint8_t pipe_id,
