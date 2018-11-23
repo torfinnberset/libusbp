@@ -7,6 +7,7 @@
 *.pc
 *.so
 .DS_STORE
+.vscode
 /CMakeCache.txt
 /build*
 /docs
