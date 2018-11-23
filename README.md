@@ -62,7 +62,9 @@ After installing MSYS2, select "MinGW-w64 Win32 shell" from the Start Menu.  The
 
 Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands to build the library and install it:
 
-    MSYS2_ARG_CONV_EXCL=- cmake . -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$MINGW_PREFIX
+    mkdir build
+    cd build
+    MSYS2_ARG_CONV_EXCL=- cmake .. -G"MSYS Makefiles" -DCMAKE_INSTALL_PREFIX=$MINGW_PREFIX
     make install DESTDIR=/
 
 We currently do not provide any build files for Visual Studio.  You can use CMake to generate Visual Studio build files, and the library and its examples will probably compile, but we have not tested the resulting library.
@@ -82,7 +84,9 @@ On Arch Linux, libudev should already be installed, and you can install CMake by
 
 Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands to build the library and install it:
 
-    cmake .
+    mkdir build
+    cd build
+    cmake ..
     make
     sudo make install
 
@@ -95,7 +99,9 @@ First, install [Homebrew](http://brew.sh/), a package manager for Mac OS X.  The
 
 Download the source code of this library and navigate to the top-level directory using `cd`.  Then run these commands in a Terminal to build the library and install it:
 
-    cmake .
+    mkdir build
+    cd build
+    cmake ..
     make
     sudo make install
 
