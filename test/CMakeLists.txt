@@ -23,10 +23,6 @@ file(GLOB test_sources *.cpp)
 
 add_executable(run_test ${test_sources})
 
-set_target_properties(run_test PROPERTIES
-  LINK_FLAGS "${link_flags}"
-)
-
 include_directories (
   "${CMAKE_CURRENT_SOURCE_DIR}"
   "${CMAKE_SOURCE_DIR}/include"

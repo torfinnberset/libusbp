@@ -122,7 +122,7 @@ libusbp_error * usbfd_bulk_or_interrupt_transfer(int fd, uint8_t pipe,
     // transfers in a VirtualBox Linux guest running on a Windows
     // host) seems to put the Linux USB drivers in some weird state
     // where every subsequent request times out.
-    if (size == 0)
+    if (size == 0 && (pipe & 0x80))
     {
         return error_create("Transfer size 0 is not allowed.");
     }
@@ -133,7 +133,7 @@ libusbp_error * usbfd_bulk_or_interrupt_transfer(int fd, uint8_t pipe,
         return error_create("Transfer size is too large.");
     }
 
-    if (buffer == NULL)
+    if (buffer == NULL && size)
     {
         return error_create("Buffer is null.");
     }

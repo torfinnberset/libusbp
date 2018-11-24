@@ -287,6 +287,45 @@ libusbp_error * libusbp_read_pipe(
     return error;
 }
 
+libusbp_error * libusbp_write_pipe(
+    libusbp_generic_handle * handle,
+    uint8_t pipe_id,
+    const void * data,
+    size_t size,
+    size_t * transferred)
+{
+    if (transferred != NULL)
+    {
+        *transferred = 0;
+    }
+
+    if (handle == NULL)
+    {
+        return error_create("Generic handle is null.");
+    }
+
+    libusbp_error * error = NULL;
+
+    if (error == NULL)
+    {
+        error = check_pipe_id_out(pipe_id);
+    }
+
+    if (error == NULL)
+    {
+        uint8_t endpoint_number = pipe_id & MAX_ENDPOINT_NUMBER;
+        uint32_t timeout = handle->out_timeout[endpoint_number];
+        error = usbfd_bulk_or_interrupt_transfer(
+            handle->fd, pipe_id, timeout, (void *)data, size, transferred);
+    }
+
+    if (error != NULL)
+    {
+        error = error_add(error, "Failed to write to pipe.");
+    }
+    return error;
+}
+
 LIBUSBP_WARN_UNUSED
 static libusbp_error * handle_completed_urb(struct usbdevfs_urb * urb)
 {
