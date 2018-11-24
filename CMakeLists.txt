@@ -18,8 +18,8 @@ endif ()
 project (libusbp)
 
 set (LIBUSBP_VERSION_MAJOR 1)
-set (LIBUSBP_VERSION_MINOR 0)
-set (LIBUSBP_VERSION_PATCH 4)
+set (LIBUSBP_VERSION_MINOR 1)
+set (LIBUSBP_VERSION_PATCH 0)
 
 # Make 'Release' be the default build type, since the debug builds
 # include exported symbols that might cause name conflicts.
