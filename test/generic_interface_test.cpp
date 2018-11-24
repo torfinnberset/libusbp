@@ -176,6 +176,7 @@ static void assert_not_ready(
     }
 }
 
+__attribute__((__unused__))
 static void assert_incorrect_driver(
     const libusbp::device & device,
     uint8_t interface_number,
@@ -248,7 +249,7 @@ TEST_CASE("Test Device A generic interface ", "[tdagi]")
             REQUIRE(id.substr(0, 13) == "/sys/devices/");
             #else
             REQUIRE(id.size() > 1);
-            for(int i = 0; i < id.size(); i++)
+            for(size_t i = 0; i < id.size(); i++)
             {
                 char c = id[i];
                 if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')))
@@ -269,7 +270,7 @@ TEST_CASE("Test Device A generic interface ", "[tdagi]")
             REQUIRE(filename.substr(0, 13) == "/dev/bus/usb/");
             #else
             REQUIRE(filename.size() > 0);
-            for(int i = 0; i < filename.size(); i++)
+            for(size_t i = 0; i < filename.size(); i++)
             {
                 char c = filename[i];
                 if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')))
