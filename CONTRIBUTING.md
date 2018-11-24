@@ -10,11 +10,11 @@ The following tools are used to help build, test, debug, and document this libra
 - [Doxygen](http://www.stack.nl/~dimitri/doxygen/)
 - Development environments:
   - Windows: [MSYS2](http://msys2.github.io/)
-  - Mac OS X: [Homebrew](http://brew.sh/)
+  - macOS: [Homebrew](http://brew.sh/)
 - Memory leak checkers:
   - Windows: Install Dr. Memory and run `drmemory -leaks_only ./run_test.exe`
   - Linux: Install Valgrind and run `valgrind ./run_test`
-  - Mac OS X:  Run `MallocStackLogging=1 ./run_test -p`, wait for the tests to finish, press Ctrl+Z, run `leaks run_test`, then finally run `fg` to go back to the stopped test process and end it.
+  - macOS:  Run `MallocStackLogging=1 ./run_test -p`, wait for the tests to finish, press Ctrl+Z, run `leaks run_test`, then finally run `fg` to go back to the stopped test process and end it.
 
 ## Underlying API documentation
 
@@ -49,7 +49,7 @@ This section attempts to organize the documentation and information about the un
   - [errno.h](https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno.h)
   - [errno-base.h](https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno-base.h)
 
-### Mac OS X APIs
+### macOS APIs
 
 - [I/O Kit Framework Reference](https://developer.apple.com/library/mac/documentation/Darwin/Reference/IOKit/index.html#//apple_ref/doc/uid/TP30000815)
 - [IOKitLib.h Reference](https://developer.apple.com/library/mac/documentation/IOKit/Reference/IOKitLib_header_reference/)

@@ -11,12 +11,12 @@ On Linux, a udev rule is typically needed in order to grant permissions for non-
 
 ## Multiple handles to the same generic interface
 
-On Linux, you can have multiple simultaneous handles open to the same generic interface of a device.  On Windows and Mac OS X, this is not possible, and you will get an error with the code `LIBUSBP_ERROR_ACCESS_DENIED` when trying to open the second handle with `libusbp_generic_handle_open`.
+On Linux, you can have multiple simultaneous handles open to the same generic interface of a device.  On Windows and macOS, this is not possible, and you will get an error with the code `LIBUSBP_ERROR_ACCESS_DENIED` when trying to open the second handle with `libusbp_generic_handle_open`.
 
 
 ## Timeouts for interrupt IN endpoints
 
-On Mac OS X, you cannot specify a timeout for an interrupt IN endpoint.  Doing so will result in the following error when you try to read from the endpoint:
+On macOS, you cannot specify a timeout for an interrupt IN endpoint.  Doing so will result in the following error when you try to read from the endpoint:
 
     Failed to read from pipe.  (iokit/common) invalid argument.  Error code 0xe00002c2.
 

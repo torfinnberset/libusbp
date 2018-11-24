@@ -369,7 +369,7 @@ libusbp_error * libusbp_device_get_serial_number(
  * /sys/devices/pci0000:00/0000:00:06.0/usb1/1-2
  * </pre>
  *
- * <b>Mac OS X:</b> This will be an integer from
+ * <b>macOS:</b> This will be an integer from
  * IORegistryEntryGetRegistryEntryID, formatted as a lower-case hex number with
  * no leading zeros.  It will look something like this:
  *
@@ -409,7 +409,7 @@ typedef struct libusbp_generic_interface
  * code LIBUSBP_ERROR_NOT_READY is returned.  If the interface is assigned to a
  * driver that is not "usbfs", an error is returned.
  *
- * On Mac OS X, we do not have any additional checks beyond just making sure
+ * On macOS, we do not have any additional checks beyond just making sure
  * that an entry for the interface is found.  For non-composite devices, that
  * check is deferred until a handle is opened.
  *
@@ -455,7 +455,7 @@ libusbp_error * libusbp_generic_interface_copy(
  * /sys/devices/pci0000:00/0000:00:06.0/usb1/1-2/1-2:1.0
  * </pre>
  *
- * <b>Mac OS X:</b> This will be an integer from
+ * <b>macOS:</b> This will be an integer from
  * IORegistryEntryGetRegistryEntryID, formatted as a lower-case hex number with
  * no leading zeros.  It will look something like this:
  *
@@ -485,7 +485,7 @@ libusbp_error * libusbp_generic_interface_get_os_id(
  * /dev/bus/usb/001/007
  * </pre>
  *
- * <b>Mac OS X:</b> This will be an integer from
+ * <b>macOS:</b> This will be an integer from
  * IORegistryEntryGetRegistryEntryID, formatted as a lower-case hex number with
  * no leading zeros.  It will look something like this:
  *
@@ -520,7 +520,7 @@ typedef struct libusbp_generic_handle
  * open already when this function is called, then this function will fail and
  * the returned error will have code ::LIBUSBP_ERROR_ACCESS_DENIED.
  *
- * On Mac OS X, this function will set the device's configuration to 1 as a
+ * On macOS, this function will set the device's configuration to 1 as a
  * side effect in case it is not already configured. */
 LIBUSBP_API LIBUSBP_WARN_UNUSED
 libusbp_error * libusbp_generic_handle_open(
@@ -682,7 +682,7 @@ typedef struct libusbp_serial_port
  * is returned with the code LIBUSBP_ERROR_NOT_READY, because this could just be
  * a temporary condition that happens right after the device is plugged in.
  *
- * On Mac OS X, it is assumed that the interface with a @a bInterfaceNumber one
+ * On macOS, it is assumed that the interface with a @a bInterfaceNumber one
  * greater than @a interface_number is the interface that the IOSerialBSDClient
  * will attach to.  This should be true if the device implements the USB CDC ACM
  * class and has ordered its interfaces so that the control interface is right
@@ -720,7 +720,7 @@ libusbp_error * libusbp_serial_port_copy(
  *
  * On Linux, it will be something like "/dev/ttyACM0".
  *
- * On Mac OS X, it will be something like "/dev/cu.usbmodem012345".
+ * On macOS, it will be something like "/dev/cu.usbmodem012345".
  * Specifically, it will be a call-out device, not a dial-in device.
  *
  * You should free the returned string by calling libusbp_string_free().

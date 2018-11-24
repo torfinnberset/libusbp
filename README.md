@@ -26,7 +26,7 @@ The library runs on:
 
 * Microsoft Windows (Windows Vista and later)
 * Linux
-* Mac OS X (10.11 and later)
+* macOS (10.11 and later)
 
 
 ## Supported USB devices and interfaces
@@ -91,9 +91,9 @@ Download the source code of this library and navigate to the top-level directory
     sudo make install
 
 
-## Building from source on Mac OS X
+## Building from source on macOS
 
-First, install [Homebrew](http://brew.sh/), a package manager for Mac OS X.  Then use Homebrew to install CMake by running the following command in a Terminal:
+First, install [Homebrew](http://brew.sh/), a package manager for macOS.  Then use Homebrew to install CMake by running the following command in a Terminal:
 
     brew install cmake
 
