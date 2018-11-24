@@ -20,6 +20,7 @@ void long_read(libusbp::generic_handle & handle)
     size_t transferred;
 
     printf("Reading %d bytes...\n", (unsigned int)transfer_size);
+    fflush(stdout);
     handle.read_pipe(endpoint_address, buffer, sizeof(buffer), &transferred);
     if (transferred == transfer_size)
     {
@@ -30,6 +31,7 @@ void long_read(libusbp::generic_handle & handle)
         printf("Transferred only %d bytes out of %d.\n",
             (unsigned int)transferred, (unsigned int)transfer_size);
     }
+    fflush(stdout);
 }
 
 void long_control_read(libusbp::generic_handle & handle)
@@ -38,6 +40,7 @@ void long_control_read(libusbp::generic_handle & handle)
     size_t transferred;
 
     printf("Performing a slow control read...\n");
+    fflush(stdout);
     handle.control_transfer(0xC0, 0x91, 10000, 5, buffer, sizeof(buffer), &transferred);
     if (transferred == 5)
     {
@@ -48,6 +51,7 @@ void long_control_read(libusbp::generic_handle & handle)
         printf("Transferred only %d bytes out of %d.\n",
             (unsigned int)transferred, (unsigned int)sizeof(buffer));
     }
+    fflush(stdout);
 }
 
 int main_with_exceptions()
