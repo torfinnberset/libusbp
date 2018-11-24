@@ -30,6 +30,9 @@
 #define ADC_DATA_ENDPOINT            2
 #define ADC_DATA_FIFO                USBF2
 #define ADC_DATA_PACKET_SIZE         5
+#define CMD_ENDPOINT                 3
+#define CMD_PACKET_SIZE              32
+#define CMD_FIFO                     USBF3
 
 #ifdef COMPOSITE
 #define NATIVE_INTERFACE_1           1
@@ -120,7 +123,7 @@ USB_DESCRIPTOR_DEVICE CODE usbDeviceDescriptor =
 #else
     0xDA01,                 // Product ID: USB Test Device A
 #endif
-    0x0006,                 // Device release number in BCD format
+    0x0007,                 // Device release number in BCD format
     1,                      // Index of Manufacturer String Descriptor
     2,                      // Index of Product String Descriptor
     3,                      // Index of Serial Number String Descriptor
@@ -134,6 +137,8 @@ struct CONFIG1 {
     USB_DESCRIPTOR_CONFIGURATION configuration;
     USB_DESCRIPTOR_INTERFACE nativeInterface0;
     USB_DESCRIPTOR_ENDPOINT adcDataIn;
+    USB_DESCRIPTOR_ENDPOINT cmdOut;
+    USB_DESCRIPTOR_ENDPOINT cmdIn;
     USB_DESCRIPTOR_INTERFACE nativeInterface1;
     USB_DESCRIPTOR_INTERFACE_ASSOCIATION portFunction;
     USB_DESCRIPTOR_INTERFACE portCommunicationInterface;
@@ -160,7 +165,7 @@ struct CONFIG1 {
         USB_DESCRIPTOR_TYPE_INTERFACE,
         NATIVE_INTERFACE_0,  // bInterfaceNumber
         0,                   // bAlternateSetting
-        1,                   // bNumEndpoints
+        3,                   // bNumEndpoints
         0xFF,                // bInterfaceClass: Vendor Specific
         0x00,                // bInterfaceSubClass
         0x00,                // bInterfaceProtocol
@@ -174,6 +179,24 @@ struct CONFIG1 {
         USB_TRANSFER_TYPE_INTERRUPT,
         ADC_DATA_PACKET_SIZE,
         1,
+    },
+
+    {
+        sizeof(USB_DESCRIPTOR_ENDPOINT),
+        USB_DESCRIPTOR_TYPE_ENDPOINT,
+        USB_ENDPOINT_ADDRESS_OUT | CMD_ENDPOINT,
+        USB_TRANSFER_TYPE_BULK,
+        CMD_PACKET_SIZE,
+        0,
+    },
+
+    {
+        sizeof(USB_DESCRIPTOR_ENDPOINT),
+        USB_DESCRIPTOR_TYPE_ENDPOINT,
+        USB_ENDPOINT_ADDRESS_IN | CMD_ENDPOINT,
+        USB_TRANSFER_TYPE_BULK,
+        CMD_PACKET_SIZE,
+        0,
     },
 
     {
@@ -470,6 +493,8 @@ bool yellowOn = 0;
 void usbCallbackInitEndpoints()
 {
     usbInitEndpointIn(ADC_DATA_ENDPOINT, ADC_DATA_PACKET_SIZE);
+    usbInitEndpointOut(CMD_ENDPOINT, CMD_PACKET_SIZE);
+    usbInitEndpointIn(CMD_ENDPOINT, CMD_PACKET_SIZE);
 }
 
 void usbCallbackSetupHandler()
@@ -638,6 +663,55 @@ void adcDataTx()
     }
 }
 
+void cmdService()
+{
+    uint8_t count, cmd, i;
+    uint16_t delay;
+
+    if (usbDeviceState != USB_STATE_CONFIGURED) { return; }
+
+    USBINDEX = CMD_ENDPOINT;
+    if (!(USBCSOL & USBCSOL_OUTPKT_RDY))
+    {
+        // No command packet available right now.
+        return;
+    }
+
+    count = USBCNTL;
+
+    if (count == 0)
+    {
+        // Empty packet
+        dataBuffer[0] = 0x66;
+    }
+
+    if (count >= 2)
+    {
+      cmd = CMD_FIFO;
+
+      // Command 0x92: Set a byte in dataBuffer
+      if (cmd == 0x92)
+      {
+          dataBuffer[0] = CMD_FIFO;
+      }
+
+      // Command 0xDE: Delay
+      if (cmd == 0xDE)
+      {
+          delay = CMD_FIFO;
+          delay += CMD_FIFO << 8;
+          delayMs(delay);
+      }
+    }
+
+    for (i = 0; i < count; i++)
+    {
+      CMD_FIFO;
+    }
+
+    USBCSOL &= ~USBCSOL_OUTPKT_RDY;  // Done with this packet.
+}
+
 void main()
 {
     uint8_t x = 0;
@@ -650,6 +724,7 @@ void main()
         usbShowStatusWithGreenLed();
         usbPoll();
         adcDataTx();
+        cmdService();
         LED_YELLOW(yellowOn);
 
         if (!isPinHigh(0))

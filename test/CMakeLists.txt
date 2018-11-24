@@ -21,10 +21,6 @@ set(USE_TEST_DEVICE_B FALSE CACHE BOOL
 
 file(GLOB test_sources *.cpp)
 
-if (APPLE)
-  set (link_flags "-framework CoreFoundation ${link_flags}")
-endif ()
-
 add_executable(run_test ${test_sources})
 
 set_target_properties(run_test PROPERTIES

@@ -210,7 +210,7 @@ TEST_CASE("Test Device A", "[tda]")
     {
         // If this test fails, you should probably update
         // your Test Device A with the latest firmware.
-        REQUIRE(device.get_revision() == 0x0006);
+        REQUIRE(device.get_revision() == 0x0007);
     }
 
     SECTION("device instance id")
@@ -227,6 +227,25 @@ TEST_CASE("Test Device A", "[tda]")
         std::string serial_number = device.get_serial_number();
         CHECK(serial_number.size() == 11);
         CHECK(serial_number[2] == '-');
+    }
+}
+#endif
+
+#ifdef USE_TEST_DEVICE_B
+TEST_CASE("Test Device B", "[tdb]")
+{
+    libusbp::device device = find_test_device_b();
+
+    SECTION("present")
+    {
+        REQUIRE(device);
+    }
+
+    SECTION("revision code")
+    {
+        // If this test fails, you should probably update
+        // your Test Device B with the latest firmware.
+        REQUIRE(device.get_revision() == 0x0007);
     }
 }
 #endif
