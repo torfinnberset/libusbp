@@ -206,17 +206,12 @@ libusbp_error * libusbp_write_pipe(
         error = check_pipe_id_out(pipe_id);
     }
 
-    if (error == NULL && size == 0)
-    {
-        error = error_create("Transfer size 0 is not allowed.");
-    }
-
     if (error == NULL && size > ULONG_MAX)
     {
         error = error_create("Transfer size is too large.");
     }
 
-    if (error == NULL && data == NULL)
+    if (error == NULL && data == NULL && size)
     {
         error = error_create("Buffer is null.");
     }
@@ -224,8 +219,8 @@ libusbp_error * libusbp_write_pipe(
     ULONG winusb_transferred = 0;
     if (error == NULL)
     {
-        BOOL success = WinUsb_WritePipe(handle->winusb_handle, pipe_id, data,
-            size, &winusb_transferred, NULL);
+        BOOL success = WinUsb_WritePipe(handle->winusb_handle, pipe_id,
+            (uint8_t *)data, size, &winusb_transferred, NULL);
         if (!success)
         {
             error = error_create_winapi("");
