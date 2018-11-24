@@ -94,7 +94,7 @@ TEST_CASE("write_pipe (synchronous) on a bulk endpoint ", "[wpi]")
 
     SECTION("can write one small packet")
     {
-        uint8_t buffer[2] = { 0x92, 0x44 };
+        uint8_t buffer[32] = { 0x92, 0x44 };
         handle.write_pipe(pipe, buffer, sizeof(buffer), &transferred);
         REQUIRE(transferred == sizeof(buffer));
 
@@ -105,31 +105,19 @@ TEST_CASE("write_pipe (synchronous) on a bulk endpoint ", "[wpi]")
         REQUIRE(buffer2[0] == 0x44);
     }
 
-    #if !defined(_WIN32) && !defined(VBOX_LINUX_ON_WINDOWS)
-    // TODO: get this to pass on Windows at least by using WinUSB's SHORT_PACKET_TERMINATE mode
-    SECTION("sends zero-length packets")
+    SECTION("can write one packet with null transferred pointer")
     {
-        uint8_t buffer[32] = { 0x92, 0x33 };
-        handle.write_pipe(pipe, buffer, sizeof(buffer), NULL);
-
-        // Expect dataBuffer to contain 0x66 because of the ZLP.
-        uint8_t buffer2[1];
-        handle.control_transfer(0xC0, 0x91, 0, 1, buffer2, 1, &transferred);
-        REQUIRE(transferred == 1);
-        REQUIRE(buffer2[0] == 0x66);
-    }
-    #endif
-
-    SECTION("can write one small packet with null transferred pointer")
-    {
-        uint8_t buffer[2] = { 0x92, 0x55 };
+        uint8_t buffer[32] = { 0x92, 0x55 };
         handle.write_pipe(pipe, buffer, sizeof(buffer), NULL);
 
         // Read the data back.
         uint8_t buffer2[1];
         handle.control_transfer(0xC0, 0x91, 0, 1, buffer2, 1, &transferred);
         REQUIRE(transferred == 1);
-        REQUIRE(buffer2[0] == 85);
+        REQUIRE(buffer2[0] == 0x55);
+
+        // Reading back 0x55 confirms that we sent the packet and confirms
+        // we did not send any zero-length packets at the end.
     }
 
     SECTION("can send zero-length trasnfers")
@@ -157,7 +145,7 @@ TEST_CASE("write_pipe (synchronous) on a bulk endpoint ", "[wpi]")
       catch (const libusbp::error & e)
       {
         REQUIRE(e.has_code(LIBUSBP_ERROR_TIMEOUT));
-        #ifdef VBOX_LINUX_ON_WINDOWS
+        #ifdef __linux__
         REQUIRE(transferred == 0);  // bad
         #else
         REQUIRE(transferred == 64);
