@@ -573,6 +573,9 @@ libusbp_error * libusbp_generic_handle_set_timeout(
 
 /*! Performs a synchronous (blocking) control transfer on endpoint 0.
  *
+ * Under Linux, this blocking transfer unfortunately cannot be interrupted with
+ * Ctrl+C.
+ *
  * The @a buffer parameter should point to a buffer that is at least @a wLength
  * bytes long.
  *
@@ -595,7 +598,7 @@ libusbp_error * libusbp_control_transfer(
 /*! Performs a synchronous (blocking) write of data to a bulk or interrupt
  * endpoint.
  *
- * Under Linux, this blocking write unfortunately cannot be interrupted with
+ * Under Linux, this blocking transfer unfortunately cannot be interrupted with
  * Ctrl+C.
  *
  * The @a pipe_id parameter specifies which endpoint to use.  This argument
@@ -620,7 +623,7 @@ libusbp_error * libusbp_write_pipe(
  * an error when the device sends more data than can fit in the
  * buffer.  This type of error is called an overflow.
  *
- * Under Linux, this blocking read unfortunately cannot be interrupted with
+ * Under Linux, this blocking transfer unfortunately cannot be interrupted with
  * Ctrl+C.
  *
  * The @a pipe_id parameter specifies which endpoint to use.  This argument
