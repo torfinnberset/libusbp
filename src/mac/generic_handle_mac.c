@@ -455,6 +455,69 @@ libusbp_error * libusbp_read_pipe(
     return error;
 }
 
+libusbp_error * libusbp_write_pipe(
+    libusbp_generic_handle * handle,
+    uint8_t pipe_id,
+    const void * buffer,
+    size_t size,
+    size_t * transferred)
+{
+    if (transferred != NULL)
+    {
+        *transferred = 0;
+    }
+
+    if (handle == NULL)
+    {
+        return error_create("Generic handle is null.");
+    }
+
+    libusbp_error * error = NULL;
+
+    if (error == NULL && size > UINT32_MAX)
+    {
+        error = error_create("Transfer size is too large.");
+    }
+
+    if (error == NULL && buffer == NULL && size)
+    {
+        error = error_create("Buffer is null.");
+    }
+
+    if (error == NULL)
+    {
+        error = check_pipe_id_out(pipe_id);
+    }
+
+    if (error == NULL)
+    {
+        uint8_t endpoint_number = pipe_id & MAX_ENDPOINT_NUMBER;
+        uint32_t no_data_timeout = 0;
+        uint32_t completion_timeout = handle->out_timeout[endpoint_number];
+        uint32_t pipe_index = handle->out_pipe_index[endpoint_number];
+        kern_return_t kr = (*handle->ioh)->WritePipeTO(handle->ioh, pipe_index,
+          (void *)buffer, size, no_data_timeout, completion_timeout);
+        if (kr != KERN_SUCCESS)
+        {
+            error = error_create_mach(kr, "");
+        }
+    }
+
+    if (error == NULL && transferred != NULL)
+    {
+        // There was no error, so just assume the entire amount was transferred.
+        // WritePipeTO does not give us a number.
+        *transferred = size;
+    }
+
+    if (error != NULL)
+    {
+        error = error_add(error, "Failed to write to pipe.");
+    }
+
+    return error;
+}
+
 #pragma pack(4)
 typedef struct
 {

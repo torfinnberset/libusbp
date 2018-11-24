@@ -133,7 +133,7 @@ TEST_CASE("write_pipe (synchronous) on a bulk endpoint ", "[wpi]")
 
     SECTION("can time out")
     {
-      // First packet causes a 150 ms delay, so this transfer will timeout after
+      // First packet causes a long delay, so this transfer will timeout after
       // a partial data transfer.  Need three packets because of double
       // buffering on the device.
       uint8_t buffer[32 * 3] = { 0xDE, 150, 0 };
@@ -145,7 +145,7 @@ TEST_CASE("write_pipe (synchronous) on a bulk endpoint ", "[wpi]")
       catch (const libusbp::error & e)
       {
         REQUIRE(e.has_code(LIBUSBP_ERROR_TIMEOUT));
-        #ifdef __linux__
+        #if defined(__linux__) || defined(__APPLE__)
         REQUIRE(transferred == 0);  // bad
         #else
         REQUIRE(transferred == 64);

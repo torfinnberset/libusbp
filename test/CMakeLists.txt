@@ -11,7 +11,7 @@ if (NOT HAVE_CATCH_FRAMEWORK)
   return ()
 endif ()
 
-use_cxx11()
+use_cxx11 ()
 
 set(USE_TEST_DEVICE_A FALSE CACHE BOOL
   "Run tests that require Test Device A.")
@@ -21,7 +21,15 @@ set(USE_TEST_DEVICE_B FALSE CACHE BOOL
 
 file(GLOB test_sources *.cpp)
 
+if (APPLE)
+  set (link_flags "-framework CoreFoundation ${link_flags}")
+endif ()
+
 add_executable(run_test ${test_sources})
+
+set_target_properties(run_test PROPERTIES
+  LINK_FLAGS "${link_flags}"
+)
 
 include_directories (
   "${CMAKE_CURRENT_SOURCE_DIR}"
