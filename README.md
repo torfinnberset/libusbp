@@ -12,7 +12,7 @@ The **Pololu USB Library** (also known as **libusbp**) is a cross-platform C lib
 - Can perform I/O on generic (vendor-defined) USB interfaces:
   - Synchronous control transfers.
   - Synchronous and asynchronous bulk/interrupt transfers on IN endpoints.
-  - Synchronous bulk/interrupt transfets on OUT endpoints.
+  - Synchronous bulk/interrupt transfers on OUT endpoints.
 - Can retrieve the names of virtual serial ports provided by a specified USB device (e.g. "COM5").
 - Provides detailed error information to the caller.
   - Each error includes one or more English sentences describing the error, including error codes from underlying APIs.
