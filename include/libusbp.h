@@ -595,6 +595,9 @@ libusbp_error * libusbp_control_transfer(
 /*! Performs a synchronous (blocking) write of data to a bulk or interrupt
  * endpoint.
  *
+ * Under Linux, this blocking write unfortunately cannot be interrupted with
+ * Ctrl+C.
+ *
  * The @a pipe_id parameter specifies which endpoint to use.  This argument
  * should be bEndpointAddress value from one of the device's IN endpoint
  * descriptors.  (Its most significant bit must be 0.)
@@ -608,8 +611,6 @@ libusbp_error * libusbp_write_pipe(
     const void * buffer,
     size_t size,
     size_t * transferred);
-// TODO: Document whether, under Linux, this can be interrupted with Ctrl+C
-// TODO: add automated tests for this
 
 /*! Performs a synchronous (blocking) read of data from a bulk or interrupt
  * endpoint.
