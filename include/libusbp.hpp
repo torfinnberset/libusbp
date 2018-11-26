@@ -377,6 +377,16 @@ namespace libusbp
             libusbp_string_free(str);
             return serial_number;
         }
+
+        /*! Wrapper for libusbp_device_get_manufacturer(). */
+        std::string get_manufacturer() const
+        {
+            char * str;
+            throw_if_needed(libusbp_device_get_manufacturer(pointer, &str));
+            std::string manufacturer = str;
+            libusbp_string_free(str);
+            return manufacturer;
+        }
     };
 
     /*! Wrapper for libusbp_list_connected_devices(). */

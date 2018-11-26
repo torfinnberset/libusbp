@@ -7,6 +7,7 @@ struct libusbp_device
     uint16_t vendor_id;
     uint16_t revision;
     char * serial_number;
+    char * manufacturer;
 };
 
 static libusbp_error * device_allocate(libusbp_device ** device)
@@ -52,6 +53,11 @@ libusbp_error * create_device(io_service_t service, libusbp_device ** device)
     if (error == NULL)
     {
         error = get_string(service, CFSTR(kUSBSerialNumberString), &new_device->serial_number);
+    }
+
+    // Get the manufacturer (vendor) name
+    if (error == NULL) {
+        error = get_string(service, CFSTR(kUSBVendorString), &new_device->manufacturer);
     }
 
     // Get the ID.
@@ -100,12 +106,19 @@ libusbp_error * libusbp_device_copy(const libusbp_device * source, libusbp_devic
     {
         memcpy(new_device, source, sizeof(libusbp_device));
         new_device->serial_number = NULL;
+        new_device->manufacturer = NULL;
     }
 
     // Copy the serial number.
     if (error == NULL && source->serial_number != NULL)
     {
         error = string_copy(source->serial_number, &new_device->serial_number);
+    }
+
+    // Copy the manufacturer
+    if (error == NULL && source->manufacturer != NULL)
+    {
+        error = string_copy(source->manufacturer, &new_device->manufacturer);
     }
 
     // Pass the device to the caller.
@@ -124,6 +137,7 @@ void libusbp_device_free(libusbp_device * device)
     if (device != NULL)
     {
         libusbp_string_free(device->serial_number);
+        libusbp_string_free(device->manufacturer);
         free(device);
     }
 }
@@ -238,4 +252,30 @@ libusbp_error * libusbp_device_get_os_id(
     }
 
     return iokit_id_to_string(device->id, id);
+}
+
+libusbp_error * libusbp_device_get_manufacturer(
+    const libusbp_device * device,
+    char ** manufacturer)
+{
+    if (manufacturer == NULL)
+    {
+        return error_create("Manufacturer output pointer is null.");
+    }
+
+    *manufacturer = NULL;
+
+    if (device == NULL)
+    {
+        return error_create("Device is null.");
+    }
+
+    if (device->manufacturer == NULL)
+    {
+        libusbp_error * error = error_create("Device does not have a manufacturer.");
+        error = error_add_code(error, LIBUSBP_ERROR_NO_MANUFACTURER);
+        return error;
+    }
+
+    return string_copy(device->manufacturer, manufacturer);
 }
