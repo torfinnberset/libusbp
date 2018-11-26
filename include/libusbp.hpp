@@ -387,6 +387,16 @@ namespace libusbp
             libusbp_string_free(str);
             return manufacturer;
         }
+
+        /*! Wrapper for libusbp_device_get_name(). */
+        std::string get_name() const
+        {
+            char * str;
+            throw_if_needed(libusbp_device_get_name(pointer, &str));
+            std::string name = str;
+            libusbp_string_free(str);
+            return name;
+        }
     };
 
     /*! Wrapper for libusbp_list_connected_devices(). */

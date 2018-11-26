@@ -8,6 +8,7 @@ struct libusbp_device
     uint16_t revision;
     char * serial_number;
     char * manufacturer;
+    char * name;
 };
 
 static libusbp_error * device_allocate(libusbp_device ** device)
@@ -60,6 +61,11 @@ libusbp_error * create_device(io_service_t service, libusbp_device ** device)
         error = get_string(service, CFSTR(kUSBVendorString), &new_device->manufacturer);
     }
 
+    // Get the device (product) name
+    if (error == NULL) {
+        error = get_string(service, CFSTR(kUSBProductString), &new_device->name);
+    }
+
     // Get the ID.
     if (error == NULL)
     {
@@ -107,6 +113,7 @@ libusbp_error * libusbp_device_copy(const libusbp_device * source, libusbp_devic
         memcpy(new_device, source, sizeof(libusbp_device));
         new_device->serial_number = NULL;
         new_device->manufacturer = NULL;
+        new_device->name = NULL;
     }
 
     // Copy the serial number.
@@ -119,6 +126,12 @@ libusbp_error * libusbp_device_copy(const libusbp_device * source, libusbp_devic
     if (error == NULL && source->manufacturer != NULL)
     {
         error = string_copy(source->manufacturer, &new_device->manufacturer);
+    }
+
+    // Copy the manufacturer
+    if (error == NULL && source->name != NULL)
+    {
+        error = string_copy(source->name, &new_device->name);
     }
 
     // Pass the device to the caller.
@@ -138,6 +151,7 @@ void libusbp_device_free(libusbp_device * device)
     {
         libusbp_string_free(device->serial_number);
         libusbp_string_free(device->manufacturer);
+        libusbp_string_free(device->name);
         free(device);
     }
 }
@@ -278,4 +292,30 @@ libusbp_error * libusbp_device_get_manufacturer(
     }
 
     return string_copy(device->manufacturer, manufacturer);
+}
+
+libusbp_error * libusbp_device_get_name(
+    const libusbp_device * device,
+    char ** name)
+{
+    if (name == NULL)
+    {
+        return error_create("Name output pointer is null.");
+    }
+
+    *name = NULL;
+
+    if (device == NULL)
+    {
+        return error_create("Device is null.");
+    }
+
+    if (device->name == NULL)
+    {
+        libusbp_error * error = error_create("Device does not have a name.");
+        error = error_add_code(error, LIBUSBP_ERROR_NO_NAME);
+        return error;
+    }
+
+    return string_copy(device->name, name);
 }
